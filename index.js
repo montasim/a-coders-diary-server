@@ -19,6 +19,21 @@ async function run() {
     try {
         await client.connect();
 
+        // find all posts
+        app.get('/posts', async (req, res) => {
+            const query = {};
+            const cursor = postsCollection.find(query);
+
+            const posts = await cursor.toArray();
+
+            if ((await cursor.count()) === 0) {
+                res.send("No post found!");
+            }
+            else {
+                res.send(posts);
+            };
+        });
+
         // create a post
         app.post('/create-post', async (req, res) => {
             const postData = req?.body;

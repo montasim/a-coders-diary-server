@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 require('dotenv').config()
 
@@ -26,12 +26,22 @@ async function run() {
 
             const posts = await cursor.toArray();
 
-            if ((await cursor.count()) === 0) {
+            if ((await cursor?.countDocuments) === 0) {
                 res.send("No post found!");
             }
             else {
                 res.send(posts);
             };
+        });
+
+        // find a post
+        app.get('/posts/:_id', async (req, res) => {
+            const _id = req?.params?._id;
+            console.log(_id);
+            const query = { _id: ObjectId(_id) };
+            const post = await postsCollection.findOne(query);
+
+            res.send(post);
         });
 
         // create a post

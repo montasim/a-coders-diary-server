@@ -15,6 +15,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run() {
     const postsCollection = client.db("a-coders-diary").collection("posts");
+    const tagsCollection = client.db("a-coders-diary").collection("tags");
 
     try {
         await client.connect();
@@ -51,6 +52,25 @@ async function run() {
             const result = await postsCollection.insertOne(postData);
 
             res.send(result);
+        });
+
+        // add a tag
+        app.post('/add-tag', async (req, res) => {
+            const tagData = req?.body;
+
+            const result = await tagsCollection.insertOne(tagData);
+
+            res.send(result);
+        });
+
+        // find a tag
+        app.get('/tags/:_id', async (req, res) => {
+            const _id = req?.params?._id;
+            console.log(_id);
+            const query = { _id: ObjectId(_id) };
+            const tag = await tagsCollection.findOne(query);
+
+            res.send(tag);
         });
 
     } finally {

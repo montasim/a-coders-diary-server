@@ -54,6 +54,21 @@ async function run() {
             res.send(result);
         });
 
+        // find all tags
+        app.get('/tags', async (req, res) => {
+            const query = {};
+            const cursor = tagsCollection.find(query);
+
+            const tags = await cursor.toArray();
+
+            if ((await cursor?.countDocuments) === 0) {
+                res.send("No tag found!");
+            }
+            else {
+                res.send(tags);
+            };
+        });
+
         // add a tag
         app.post('/add-tag', async (req, res) => {
             const tagData = req?.body;

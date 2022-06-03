@@ -14,7 +14,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@clu
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run() {
-    const userCollection = client.db("a-coders-diary").collection("users");
+    const usersCollection = client.db("a-coders-diary").collection("users");
     const postsCollection = client.db("a-coders-diary").collection("posts");
     const tagsCollection = client.db("a-coders-diary").collection("tags");
 
@@ -24,7 +24,7 @@ async function run() {
         // find all users
         app.get('/users', async (req, res) => {
             const query = {};
-            const cursor = userCollection.find(query);
+            const cursor = usersCollection.find(query);
 
             const users = await cursor.toArray();
 
@@ -40,9 +40,18 @@ async function run() {
         app.post('/create-user', async (req, res) => {
             const userData = req?.body;
 
-            const result = await userCollection.insertOne(userData);
+            const result = await usersCollection.insertOne(userData);
 
             res.send(result);
+        });
+
+        // author details
+        app.get('/author-details/:_id', async (req, res) => {
+            const _id = req?.params?._id;
+            const query = { _id: ObjectId(_id) };
+            const authorDetails = await usersCollection.findOne(query);
+
+            res.send(authorDetails);
         });
 
         // find all posts
@@ -58,6 +67,15 @@ async function run() {
             else {
                 res.send(posts);
             };
+        });
+
+        // post details
+        app.get('/post-details/:_id', async (req, res) => {
+            const _id = req?.params?._id;
+            const query = { _id: ObjectId(_id) };
+            const post = await postsCollection.findOne(query);
+
+            res.send(post);
         });
 
         // edit a post

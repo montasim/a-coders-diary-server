@@ -21,6 +21,21 @@ async function run() {
     try {
         await client.connect();
 
+        // find all users
+        app.get('/users', async (req, res) => {
+            const query = {};
+            const cursor = userCollection.find(query);
+
+            const users = await cursor.toArray();
+
+            if ((await users?.countDocuments) === 0) {
+                res.send("No user found!");
+            }
+            else {
+                res.send(users);
+            };
+        });
+
         // create a user
         app.post('/create-user', async (req, res) => {
             const userData = req?.body;
@@ -61,6 +76,15 @@ async function run() {
             const result = await postsCollection.insertOne(postData);
 
             res.send(result);
+        });
+
+        // delete a post
+        app.delete('/delete-post/:_id', async (req, res) => {
+            const _id = req?.params?._id;
+            const query = { _id: ObjectId(_id) };
+            const post = await postsCollection.deleteOne(query);
+
+            res.send(post);
         });
 
         // find all tags

@@ -54,6 +54,15 @@ async function run() {
             return res.send(user);
         });
 
+        // delete a user
+        app.delete('/delete-user/:_id', async (req, res) => {
+            const _id = req?.params?._id;
+            const query = { _id: ObjectId(_id) };
+            const user = await usersCollection.deleteOne(query);
+
+            res.send(user);
+        });
+
         // author details
         app.get('/author-details/:_id', async (req, res) => {
             const _id = req?.params?._id;

@@ -78,6 +78,16 @@ async function run() {
             res.send(post);
         });
 
+        // user specific posts
+        app.get('/my-posts', async (req, res) => {
+            const postAuthor = req.query.postAuthor;
+            console.log(postAuthor);
+            const query = { postAuthor: postAuthor };
+            const posts = await postsCollection.find(query).toArray();
+
+            return res.send(posts);
+        });
+
         // edit a post
         app.get('/edit-post/:_id', async (req, res) => {
             const _id = req?.params?._id;

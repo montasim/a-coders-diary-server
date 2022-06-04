@@ -76,6 +76,19 @@ async function run() {
             res.send(result);
         });
 
+        // remove admin
+        app.put('/remove-admin/:userEmail', async (req, res) => {
+            const userEmail = req?.params?.userEmail;
+            console.log(userEmail);
+            const filter = { userEmail: userEmail };
+            const updateUser = {
+                $set: { userRole: 'user' },
+            };
+            const result = await usersCollection.updateOne(filter, updateUser);
+
+            res.send(result);
+        });
+
         // author details
         app.get('/author-details/:_id', async (req, res) => {
             const _id = req?.params?._id;

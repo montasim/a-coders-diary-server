@@ -23,10 +23,9 @@ async function run() {
 
         // find all users
         app.get('/users', async (req, res) => {
-            const query = {};
-            const cursor = usersCollection.find(query);
-
-            const users = await cursor.toArray();
+            const userRole = 'user';
+            const query = { userRole: userRole };
+            const users = await usersCollection.find(query).toArray();
 
             if ((await users?.countDocuments) === 0) {
                 res.send("No user found!");

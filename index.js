@@ -63,6 +63,16 @@ async function run() {
             res.send(user);
         });
 
+
+        // all admins
+        app.get('/admins', async (req, res) => {
+            const userRole = 'admin';
+            const query = { userRole: userRole };
+            const admins = await usersCollection.find(query).toArray();
+
+            return res.send(admins);
+        });
+
         // create admin
         app.put('/create-admin/:userEmail', async (req, res) => {
             const userEmail = req?.params?.userEmail;

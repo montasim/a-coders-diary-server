@@ -63,6 +63,19 @@ async function run() {
             res.send(user);
         });
 
+        // create admin
+        app.put('/create-admin/:userEmail', async (req, res) => {
+            const userEmail = req?.params?.userEmail;
+            console.log(userEmail);
+            const filter = { userEmail: userEmail };
+            const updateUser = {
+                $set: { userRole: 'admin' },
+            };
+            const result = await usersCollection.updateOne(filter, updateUser);
+
+            res.send(result);
+        });
+
         // author details
         app.get('/author-details/:_id', async (req, res) => {
             const _id = req?.params?._id;

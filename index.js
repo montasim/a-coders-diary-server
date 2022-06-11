@@ -17,6 +17,7 @@ async function run() {
     const usersCollection = client.db("a-coders-diary").collection("users");
     const postsCollection = client.db("a-coders-diary").collection("posts");
     const tagsCollection = client.db("a-coders-diary").collection("tags");
+    const projectsCollection = client.db("a-coders-diary").collection("projects");
 
     try {
         await client.connect();
@@ -209,6 +210,30 @@ async function run() {
             const tag = await tagsCollection.deleteOne(query);
 
             res.send(tag);
+        });
+
+        // find all tags
+        app.get('/projects', async (req, res) => {
+            const query = {};
+            const cursor = projectsCollection.find(query);
+
+            const projects = await cursor.toArray();
+
+            if ((await cursor?.countDocuments) === 0) {
+                res.send("No projects found!");
+            }
+            else {
+                res.send(projects);
+            };
+        });
+
+        // find a project
+        app.get('/project-details/:_projectName', async (req, res) => {
+            const projectName = req?.params?._projectName;
+            const query = { _projectName: ObjectId(projectName) };
+            const project = await projectsCollection.findOne(query);
+
+            res.send(project);
         });
 
     } finally {

@@ -212,7 +212,7 @@ async function run() {
             res.send(tag);
         });
 
-        // find all tags
+        // get all projects
         app.get('/projects', async (req, res) => {
             const query = {};
             const cursor = projectsCollection.find(query);
@@ -227,13 +227,14 @@ async function run() {
             };
         });
 
-        // find a project
-        app.get('/project-details/:_projectName', async (req, res) => {
-            const projectName = req?.params?._projectName;
-            const query = { _projectName: ObjectId(projectName) };
-            const project = await projectsCollection.findOne(query);
+        // project details
+        app.get('/project-details/:_id', async (req, res) => {
+            const _id = req?.params?._id;
+            console.log(_id);
+            const query = { _id: ObjectId(_id) };
+            const projectDetails = await projectsCollection.findOne(query);
 
-            res.send(project);
+            res.send(projectDetails);
         });
 
     } finally {

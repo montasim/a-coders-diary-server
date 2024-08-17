@@ -1,0 +1,44 @@
+####################################################
+# .prettierignore Configuration File
+####################################################
+# This file serves as a template for specifying files and directories
+# that should be ignored by Prettier, a code formatting tool.
+# Adjust these settings to exclude specific files or directories
+# from being automatically formatted.
+
+####################################################
+# ARTIFACTS
+# Purpose: Exclude generated files and build artifacts from formatting.
+# Use: Ensure that build outputs and other generated files are not reformatted by Prettier.
+####################################################
+.idea
+node_modules
+build
+logs
+
+####################################################
+# DOCUMENTATION
+# Purpose: Exclude documentation files that may not require formatting.
+# Use: Prevent Prettier from attempting to format documentation files.
+####################################################
+documentation
+LICENSE
+SECURITY.md
+src/modules/api/documentation/
+
+####################################################
+# DEPENDENCY LOCK FILE
+# Purpose: Exclude dependency lock files from formatting.
+# Use: Prevent Prettier from modifying lock files that are managed by package managers.
+####################################################
+yarn.lock
+
+####################################################
+# CONFIGURATION FILES
+# Purpose: Exclude configuration files that should remain unmodified.
+# Use: Avoid formatting configuration files that are critical for tool setups.
+####################################################
+.babelrc
+.env
+.env.development
+.yarn

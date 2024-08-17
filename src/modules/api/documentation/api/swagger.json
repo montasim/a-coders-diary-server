@@ -1,0 +1,1636 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Node Express Boilerplate",
+    "version": "1.0.0",
+    "description": "A boilerplate for building RESTful APIs using Node.js, Express, and MongoDB."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/v1",
+      "description": "Development server",
+      "variables": {
+        "version": {
+          "default": "v1"
+        }
+      }
+    },
+    {
+      "url": "http://stg.example.com/api/v1",
+      "description": "Staging server",
+      "variables": {
+        "version": {
+          "default": "v1"
+        }
+      }
+    },
+    {
+      "url": "http://production.example.com/api/v1",
+      "description": "Production server",
+      "variables": {
+        "version": {
+          "default": "v1"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Create pronouns",
+        "description": "Creates a new set of pronouns, accessible only to users with admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address for the new admin."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the new admin account."
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the pronouns set."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pronouns created successfully."
+          },
+          "400": {
+            "description": "Bad request, e.g., missing name or pronouns already exist."
+          },
+          "403": {
+            "description": "Email already registered as a user."
+          },
+          "409": {
+            "description": "Email already registered."
+          }
+        },
+        "tags": [
+          "Pronouns Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used on this route.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Error Testing"
+        ]
+      },
+      "get": {
+        "summary": "Test uncaught exception simulation.",
+        "description": "Triggers an uncaught exception to test the system's error handling capabilities.",
+        "responses": {
+          "200": {
+            "description": "System is operational.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "language": {
+                      "type": "string",
+                      "description": "Preferred language of the user extracted from the 'Accept-Language' header."
+                    },
+                    "os": {
+                      "type": "string",
+                      "description": "Operating system of the user's device."
+                    },
+                    "ip": {
+                      "type": "string",
+                      "description": "IP address of the user."
+                    },
+                    "device": {
+                      "type": "string",
+                      "description": "Type of device used, such as Desktop, Tablet, Mobile, or Unknown."
+                    },
+                    "browser": {
+                      "type": "string",
+                      "description": "Browser used by the user."
+                    },
+                    "browserVersion": {
+                      "type": "string",
+                      "description": "Version of the browser."
+                    },
+                    "timeZone": {
+                      "type": "string",
+                      "description": "Time zone of the user based on browser settings."
+                    },
+                    "referrer": {
+                      "type": "string",
+                      "description": "Referrer URL if the request came from another site."
+                    },
+                    "cookies": {
+                      "type": "string",
+                      "description": "Raw cookie header from the request."
+                    },
+                    "geo": {
+                      "type": "object",
+                      "description": "Optional geolocation data based on the user's IP address.",
+                      "properties": {
+                        "country": {
+                          "type": "string",
+                          "description": "Country derived from the IP address."
+                        },
+                        "region": {
+                          "type": "string",
+                          "description": "Region derived from the IP address."
+                        },
+                        "city": {
+                          "type": "string",
+                          "description": "City derived from the IP address."
+                        }
+                      }
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "license": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "engines": {
+                      "type": "object",
+                      "properties": {
+                        "node": {
+                          "type": "string"
+                        },
+                        "yarn": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "homepage": {
+                      "type": "string"
+                    },
+                    "bugs": {
+                      "type": "string"
+                    },
+                    "environment": {
+                      "type": "object",
+                      "properties": {
+                        "current": {
+                          "type": "string"
+                        },
+                        "apiVersion": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "support": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "author": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "mobile": {
+                          "type": "string"
+                        },
+                        "linkedin": {
+                          "type": "string"
+                        },
+                        "github": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Simulated uncaught exception."
+          }
+        },
+        "tags": [
+          "Home"
+        ]
+      },
+      "delete": {
+        "summary": "Delete multiple pronouns",
+        "description": "Deletes a list of pronouns based on their IDs, accessible only to admin users.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Array of pronouns IDs to delete."
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pronouns deleted successfully."
+          },
+          "400": {
+            "description": "Bad request, e.g., some IDs do not exist."
+          }
+        },
+        "tags": [
+          "Pronouns Management"
+        ]
+      }
+    },
+    "/verify/{token}": {
+      "get": {
+        "summary": "Verify Email",
+        "description": "Verifies a user's email using a token.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Verification token sent to the user's email."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email verified successfully."
+          },
+          "403": {
+            "description": "Invalid or expired token."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/resend-verification/{id}": {
+      "get": {
+        "summary": "Resend Verification Email",
+        "description": "Resends the verification email to the user based on the user ID provided.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier of the user."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verification email resent successfully."
+          },
+          "403": {
+            "description": "Email already verified."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/requestBooks-new-password": {
+      "put": {
+        "summary": "Requests a new admin password.",
+        "description": "Initiates a password reset process for an admin.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address of the admin."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset email sent successfully."
+          },
+          "401": {
+            "description": "Email not verified."
+          },
+          "404": {
+            "description": "No account found with that email address."
+          }
+        },
+        "tags": [
+          "Admin Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Admin Management"
+        ]
+      }
+    },
+    "/reset-password/{token}": {
+      "put": {
+        "summary": "Reset Password",
+        "description": "Allows a user to reset their password using a valid token received via email.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Token received for resetting the password."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newPassword": {
+                    "type": "string",
+                    "description": "New password for the user."
+                  },
+                  "confirmNewPassword": {
+                    "type": "string",
+                    "description": "Confirmation of the new password."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully."
+          },
+          "403": {
+            "description": "Invalid or expired token."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Login",
+        "description": "Authenticates a user and returns a token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address of the user."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password of the user."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication successful."
+          },
+          "401": {
+            "description": "Authentication failed."
+          },
+          "404": {
+            "description": "No account found with that email address."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/logout": {
+      "get": {
+        "summary": "Logout",
+        "description": "Logs out a user and invalidates the session token.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logout successful."
+          },
+          "401": {
+            "description": "User not logged in."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/request-new-password": {
+      "put": {
+        "summary": "Request New Password",
+        "description": "Initiates a password reset process for a user by sending them an email with a reset link.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address associated with the user account."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reset email sent successfully."
+          },
+          "404": {
+            "description": "No user found with this email."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/signup": {
+      "post": {
+        "summary": "Sign Up",
+        "description": "Registers a new user and sends a verification email.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email address for the new user."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for the new user."
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "description": "Confirmation of the password."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully."
+          },
+          "400": {
+            "description": "Invalid data provided."
+          },
+          "409": {
+            "description": "Email already in use."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/permissions/": {
+      "post": {
+        "summary": "Creates a new permission.",
+        "description": "Creates a new permission record. This endpoint is accessible only to users with admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the permission."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "A brief description of the permission."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Permission created successfully."
+          },
+          "400": {
+            "description": "Invalid input data."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      },
+      "get": {
+        "summary": "Retrieves a list of permissions.",
+        "description": "Fetches a list of permissions, optionally filtered by various criteria.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of permissions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes multiple permissions.",
+        "description": "Deletes a list of permissions based on provided identifiers.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Array of permission IDs to delete."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Permissions deleted successfully."
+          },
+          "400": {
+            "description": "Invalid request format."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods for the permissions endpoint.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      }
+    },
+    "/permissions/default": {
+      "post": {
+        "summary": "Creates default permission set.",
+        "description": "Generates and assigns default permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Default permissions created successfully."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods for the default permissions endpoint.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      }
+    },
+    "/permissions/{id}": {
+      "get": {
+        "summary": "Retrieves a permission by ID.",
+        "description": "Fetches details of a specific permission by its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the permission."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Permission details retrieved successfully."
+          },
+          "404": {
+            "description": "Permission not found."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      },
+      "put": {
+        "summary": "Updates a permission by ID.",
+        "description": "Modifies details of a specific permission using its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Updated name of the permission."
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Updated description of the permission."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Permission updated successfully."
+          },
+          "404": {
+            "description": "Permission not found."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a permission by ID.",
+        "description": "Removes a specific permission using its ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the permission to delete."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Permission deleted successfully."
+          },
+          "404": {
+            "description": "Permission not found."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods for permission ID specific endpoint.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Permissions Management"
+        ]
+      }
+    },
+    "/{id}": {
+      "get": {
+        "summary": "Retrieve pronouns by ID",
+        "description": "Retrieves a single set of pronouns by ID, results can be cached.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the pronouns to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pronouns retrieved successfully."
+          },
+          "404": {
+            "description": "Pronouns not found."
+          }
+        },
+        "tags": [
+          "Pronouns Management"
+        ]
+      },
+      "put": {
+        "summary": "Update pronouns by ID",
+        "description": "Updates an existing set of pronouns by ID, accessible only to admin users.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the pronouns to update."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The new name for the pronouns set."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pronouns updated successfully."
+          },
+          "400": {
+            "description": "Bad request, e.g., duplicate name."
+          },
+          "404": {
+            "description": "Pronouns not found."
+          }
+        },
+        "tags": [
+          "Pronouns Management"
+        ]
+      },
+      "delete": {
+        "summary": "Delete pronouns by ID",
+        "description": "Deletes a single set of pronouns by ID, accessible only to admin users.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the pronouns to delete."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pronouns deleted successfully."
+          },
+          "404": {
+            "description": "Pronouns not found."
+          }
+        },
+        "tags": [
+          "Pronouns Management"
+        ]
+      },
+      "all": {
+        "summary": "Method not supported",
+        "responses": {
+          "405": {
+            "description": "HTTP method not supported."
+          }
+        },
+        "tags": [
+          "Pronouns Management"
+        ]
+      }
+    },
+    "/roles": {
+      "post": {
+        "summary": "Creates a new role.",
+        "description": "Creates a new role with specified permissions. This endpoint requires admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Role created successfully."
+          },
+          "400": {
+            "description": "Invalid data provided."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      },
+      "get": {
+        "summary": "Retrieves a list of roles.",
+        "description": "Fetches a list of roles based on pagination and filters. Requires admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Page number of the roles list"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of roles per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of roles.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Role"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No roles found."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a list of roles by IDs.",
+        "description": "Deletes roles based on a list of IDs provided in the request. Requires admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of role IDs to delete"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Roles deleted successfully."
+          },
+          "400": {
+            "description": "Invalid request format."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      }
+    },
+    "/roles/default": {
+      "post": {
+        "summary": "Creates or updates the default role.",
+        "description": "Creates or updates the default role with all available permissions. Requires admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Default role created or updated successfully."
+          },
+          "400": {
+            "description": "Failed to create or update the default role."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      }
+    },
+    "/roles/{roleId}": {
+      "get": {
+        "summary": "Retrieves a role by ID.",
+        "description": "Fetches a role by its ID. Requires admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "roleId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the role to retrieve."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role retrieved successfully."
+          },
+          "404": {
+            "description": "Role not found."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      },
+      "put": {
+        "summary": "Updates a role by ID.",
+        "description": "Updates the specified role's details by ID. Requires admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Role updated successfully."
+          },
+          "404": {
+            "description": "Role not found."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a role by ID.",
+        "description": "Deletes the specified role by its ID. Requires admin permissions.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Role deleted successfully."
+          },
+          "404": {
+            "description": "Role not found."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "Role Management"
+        ]
+      }
+    },
+    "/{username}": {
+      "get": {
+        "summary": "Retrieve user profile by username.",
+        "description": "Fetches the user profile based on the provided username. This endpoint respects the user's privacy settings and only returns information allowed under those settings.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "username",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The username of the user whose profile is being requested."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "bio": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "username": "johndoe",
+                    "email": "johndoe@example.com",
+                    "bio": "Here is a little about me..."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access to the profile is forbidden."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        },
+        "tags": [
+          "User Profile Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "User Profile Management"
+        ]
+      }
+    },
+    "/activity": {
+      "get": {
+        "summary": "Fetch user activity information.",
+        "description": "Retrieves activity-related information for a user. Only authorized users can access this endpoint.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User activity information retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "Unique identifier of the user."
+                    },
+                    "lastLogin": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Last login time of the user."
+                    },
+                    "lastActivity": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Last activity time of the user."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized access."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        },
+        "tags": [
+          "User Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods for user activity route.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "User Management"
+        ]
+      }
+    },
+    "/security": {
+      "get": {
+        "summary": "Fetches the security log for the authenticated user.",
+        "description": "Retrieves the security log of the user, including all security-related activities.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Security activities retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "userId": {
+                      "type": "string",
+                      "description": "Unique identifier of the user."
+                    },
+                    "twoFactorEnabled": {
+                      "type": "boolean",
+                      "description": "Indicates if two-factor authentication is enabled."
+                    },
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Please log in first."
+          },
+          "404": {
+            "description": "User not found."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        },
+        "tags": [
+          "User Log Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "User Log Management"
+        ],
+        "description": "Returns an error if an unsupported HTTP method is used."
+      }
+    },
+    "/account": {
+      "get": {
+        "summary": "Fetches the account log for the authenticated user.",
+        "description": "Retrieves the activity log of the user associated with account-related changes.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Account activities retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "category": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "date": {
+                            "type": "string",
+                            "format": "date-time"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Please log in first."
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        },
+        "tags": [
+          "User Log Management"
+        ]
+      },
+      "all": {
+        "summary": "Handles unsupported methods.",
+        "description": "Returns an error if an unsupported HTTP method is used.",
+        "responses": {
+          "405": {
+            "description": "Method not supported."
+          }
+        },
+        "tags": [
+          "User Log Management"
+        ]
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "Status check.",
+        "description": "This endpoint checks the current status of the application to ensure it is running properly.",
+        "responses": {
+          "200": {
+            "description": "Application is running."
+          },
+          "500": {
+            "description": "Error in application status."
+          }
+        },
+        "tags": [
+          "Status"
+        ]
+      }
+    },
+    "/test-uncaught-exception": {
+      "get": {
+        "summary": "Test uncaught exception.",
+        "description": "This endpoint is used to test the handling of uncaught exceptions within the application.",
+        "responses": {
+          "500": {
+            "description": "Uncaught exception occurred and handled."
+          }
+        },
+        "tags": [
+          "Test Uncaught Exception"
+        ]
+      }
+    },
+    "/*": {
+      "all": {
+        "summary": "Handle undefined routes.",
+        "description": "Returns an error response for any requests made to undefined routes.",
+        "responses": {
+          "404": {
+            "description": "Invalid route!"
+          },
+          "500": {
+            "description": "Internal server error."
+          }
+        },
+        "tags": [
+          "Error Handling"
+        ]
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}

@@ -1,0 +1,52 @@
+name: Continuous Integration
+
+on:
+    push:
+        branches:
+            - '**'
+    pull_request:
+        branches:
+            - '**'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Check out code
+              uses: actions/checkout@v3
+
+            - name: Log checkout commit
+              run: echo "Checked out $(git rev-parse --short HEAD)"
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
+
+            - name: Log Node.js version
+              run: echo "Using Node.js $(node -v)"
+
+            - name: Install dependencies
+              run: |
+                  echo "Installing dependencies..."
+                  yarn install
+                  echo "Dependencies installed."
+
+            - name: Run lint checks
+              run: |
+                  echo "Running lint checks..."
+                  yarn lint:check
+                  echo "Lint checks completed."
+
+            - name: Run Prettier checks
+              run: |
+                  echo "Running Prettier checks..."
+                  yarn prettier:check
+                  echo "Prettier checks completed."
+
+            - name: Build the project
+              run: |
+                  echo "Building the project..."
+                  yarn build
+                  echo "Build completed."

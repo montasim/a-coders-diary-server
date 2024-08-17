@@ -1,0 +1,19 @@
+version: '3.8'
+# Specifies the version of the Docker Compose file syntax.
+
+services:
+    # Defines the services, their configuration, and how they interact.
+    app:
+        # The 'app' service definition, describing how to build and run your application container.
+        build:
+            # Instructions for building the Docker image.
+            context: . # Specifies the build context location, which is the current directory.
+            dockerfile: Dockerfile # Specifies the Dockerfile to use for building the image.
+        ports:
+            - '5002:5002' # Maps port 5002 on the host to port 5002 in the container, allowing external access.
+        env_file:
+            - .env.staging # Specifies the environment file that contains the staging environment variables.
+        restart: unless-stopped
+        # Configures the restart policy to restart the container unless it is explicitly stopped.
+        environment:
+            - NODE_ENV=staging # Sets the NODE_ENV environment variable to 'staging'.

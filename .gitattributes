@@ -1,0 +1,61 @@
+####################################################
+# .gitattributes Configuration File
+####################################################
+# This configuration file is used by Git to handle the line endings and encoding settings for files based on their type.
+# It ensures consistent handling of files across different operating systems and environments.
+
+####################################################
+# DEFAULT BEHAVIOR
+# Purpose: Defines the default text handling behavior for files when committing and checking out.
+# Use: Ensures automatic normalization of line endings.
+####################################################
+* text=auto
+# Ensures automatic text handling, which normalizes line endings on commit and converts them on checkout.
+
+####################################################
+# FILE TYPE SPECIFIC LINE ENDING SETTINGS
+# Purpose: Specifies line ending settings for specific file types to ensure consistency across platforms.
+# Use: Configure the end-of-line normalization for different file types.
+####################################################
+*.js text eol=crlf
+*.jsx text eol=crlf
+*.ts text eol=crlf
+*.tsx text eol=crlf
+*.json text eol=crlf
+*.md text eol=crlf
+
+####################################################
+# FILE TYPE SPECIFIC ENCODING SETTINGS
+# Purpose: Sets UTF-8 encoding for certain file types to prevent encoding issues across different environments.
+# Use: Configure file encoding to ensure consistent handling of character sets.
+####################################################
+*.js charset=utf-8
+*.jsx charset=utf-8
+*.ts charset=utf-8
+*.tsx charset=utf-8
+*.json charset=utf-8
+
+####################################################
+# SPECIAL HANDLING FOR MARKDOWN FILES
+# Purpose: Provides special handling for markdown files to avoid issues with formatting and trailing whitespace.
+# Use: Ensure consistent formatting and handling of markdown files.
+####################################################
+*.md text=auto eol=crlf
+*.md -trim_trailing_whitespace
+
+####################################################
+# BINARY FILES
+# Purpose: Defines binary files to prevent Git from attempting to auto-correct line endings or apply text transformations.
+# Use: Ensure binary files are treated as binary data without modification.
+####################################################
+*.png binary
+*.jpg binary
+*.gif binary
+
+####################################################
+# EXPLANATION OF BINARY SETTING
+# Purpose: Ensures binary files are not modified by Git's end-of-line conversion or text transformations.
+# Use: Maintain the integrity of binary files such as images.
+####################################################
+# 'binary' attribute is used to tell Git to treat the file as binary data, preventing any automatic end-of-line conversion,
+# and ensuring that the file is not modified.

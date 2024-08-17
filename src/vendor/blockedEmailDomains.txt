@@ -1,0 +1,4 @@
+tempmail.com
+example.com
+test.com
+etc.com

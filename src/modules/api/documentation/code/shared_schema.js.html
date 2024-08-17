@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: shared/schema.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: shared/schema.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview This module consolidates and exports shared schema definitions for various attributes commonly used across multiple models in the application.
+ * Each schema component is defined using Mongoose's Schema types and includes detailed validations, constraints, and descriptions to ensure data integrity and provide clarity on their intended use.
+ * The shared schemas encompass a wide range of user attributes, from basic personal information like usernames and dates of birth to more complex data like social media profiles and security settings.
+ * This modular approach to schema management facilitates reusability, maintains consistency across different parts of the application, and simplifies the maintenance of the database model.
+ */
+
+import { Schema } from 'mongoose';
+
+import constants from '../constant/constants.js';
+import userConstants from '../modules/api/users/users.constants.js';
+import patterns from '../constant/patterns.constants.js';
+
+/**
+ * @schema usernameSchema
+ * Defines validation and formatting for usernames, ensuring they are unique, properly trimmed, and lowercase.
+ * The username is also required to match a specific email pattern, with validations for minimum and maximum lengths.
+ */
+const usernameSchema = {
+    type: String,
+    trim: true,
+    lowercase: true,
+    sparse: true,
+    unique: [
+        true,
+        'The username you chose is already in use. Please try a different one.',
+    ],
+    match: [
+        userConstants.pattern.USERNAME,
+        'Please enter a valid email address for your username.',
+    ],
+    minlength: [
+        constants.lengths.USERNAME_MIN,
+        `Username should be at least ${constants.lengths.USERNAME_MIN} characters.`,
+    ],
+    maxlength: [
+        constants.lengths.USERNAME_MAX,
+        `Username should not exceed ${constants.lengths.USERNAME_MAX} characters.`,
+    ],
+    description: 'Username, must be unique and formatted as an email address.',
+};
+
+/**
+ * @schema dateOfBirthSchema
+ * Captures the user's date of birth, required for age-based access control. It ensures the date is in the specified format (DD-MM-YYYY) and is a valid date.
+ */
+const dateOfBirthSchema = {
+    type: Date,
+    trim: true,
+    required: [true, 'Your date of birth is required.'],
+    match: [
+        userConstants.pattern.DATE_OF_BIRTH,
+        'Date of birth must be in the format DD-MM-YYYY and a valid date.',
+    ],
+    description:
+        "The user's birth date, important for age-based access control.",
+};
+
+/**
+ * @schema bioSchema
+ * Stores a brief user biography. This field is trimmed for whitespace and has a maximum character length limit to ensure concise user descriptions.
+ */
+const bioSchema = {
+    type: String,
+    trim: true,
+    maxlength: [
+        userConstants.lengths.BIO_MAX,
+        `Bio should not exceed ${userConstants.lengths.BIO_MAX} characters.`,
+    ],
+    description:
+        'A short description about the user, limited to a specified maximum length.',
+};
+
+/**
+ * @schema pronounsSchema
+ * Links to an external Pronouns model, allowing the user to select pronouns from a predefined list. This schema helps in promoting inclusivity within the application.
+ */
+const pronounsSchema = {
+    type: Schema.Types.ObjectId,
+    trim: true,
+    ref: 'Pronouns',
+    default: undefined,
+    description:
+        'Reference to an external Pronouns model, ensuring pronouns are selected from a predefined list.',
+};
+
+/**
+ * @schema numericIdSchema
+ * Represents a unique numeric identifier for a user, which is sparse and unique. It is used for systems that require a numeric ID alongside traditional string-based identifiers.
+ */
+const numericIdSchema = {
+    type: Number,
+    trim: true,
+    sparse: true,
+    unique: [
+        true,
+        'The numeric ID must be unique. Duplicate IDs are not allowed.',
+    ],
+    // required: [true, 'A numeric ID is required for each user.'],
+    description:
+        'Numeric part of the unique identifier, incremented automatically.',
+};
+
+/**
+ * @schema userIdSchema
+ * Stores a unique user ID in a predefined format, ensuring uniqueness across the system. This ID is crucial for linking user activities and data securely.
+ */
+const userIdSchema = {
+    type: String,
+    trim: true,
+    sparse: true,
+    // required: [
+    //     true,
+    //     'A user ID is required and must be unique across all users.',
+    // ],
+    unique: [
+        true,
+        'The user ID must be unique. Duplicate user IDs are not allowed.',
+    ],
+    description:
+        'User ID in the format user-X, where X is an auto-incremented number.',
+};
+
+/**
+ * @schema imageSchema
+ * Manages image data including file identifiers and URLs for sharing and downloading images, ensuring links do not exceed maximum length specifications.
+ */
+const imageSchema = new Schema({
+    fileId: {
+        type: String,
+        trim: true,
+        maxlength: [
+            constants.lengths.IMAGE.FILE_ID_MAX,
+            `File ID should not exceed ${constants.lengths.IMAGE.FILE_ID_MAX} characters.`,
+        ],
+        description:
+            'Identifier for an image file stored in a file system or external service.',
+    },
+    shareableLink: {
+        type: String,
+        trim: true,
+        maxlength: [
+            constants.lengths.IMAGE.SHAREABLE_LINK,
+            `Shareable link should not exceed ${constants.lengths.IMAGE.SHAREABLE_LINK} characters.`,
+        ],
+        description: "URL link that allows others to access the user's image.",
+    },
+    downloadLink: {
+        type: String,
+        trim: true,
+        maxlength: [
+            constants.lengths.IMAGE.DOWNLOAD_LINK,
+            `Download link should not exceed ${constants.lengths.IMAGE.DOWNLOAD_LINK} characters.`,
+        ],
+        description: "URL link to directly download the user's image.",
+    },
+});
+
+/**
+ * @schema nameSchema
+ * Handles storage of user names, broken down into first, middle, last, and nick names, each with specific formatting and length requirements to maintain data consistency.
+ */
+const nameSchema = new Schema({
+    first: {
+        type: String,
+        trim: true,
+        required: [true, 'Please enter your name to create your profile.'],
+        match: [
+            userConstants.pattern.NAME,
+            'Invalid name format. Names should only contain alphabetic characters and appropriate separators like spaces. For example, "John", "Mary Anne".',
+        ],
+        minlength: [
+            userConstants.lengths.NAME.FIRST_MIN,
+            `Name should be at least ${userConstants.lengths.NAME.FIRST_MIN} characters.`,
+        ],
+        maxlength: [
+            userConstants.lengths.NAME.FIRST_MAX,
+            `Name should not exceed ${userConstants.lengths.NAME.FIRST_MAX} characters.`,
+        ],
+        description:
+            "User's name; must meet minimum and maximum length requirements.",
+    },
+    middle: {
+        type: String,
+        trim: true,
+        match: [
+            userConstants.pattern.NAME,
+            'Invalid middle name format. Names should only contain alphabetic characters and appropriate separators like spaces. For example, "John", "Mary Anne".',
+        ],
+        minlength: [
+            userConstants.lengths.NAME.MIDDLE_MIN,
+            `Name should be at least ${userConstants.lengths.NAME.MIDDLE_MIN} characters.`,
+        ],
+        maxlength: [
+            userConstants.lengths.NAME.MIDDLE_MAX,
+            `Name should not exceed ${userConstants.lengths.NAME.MIDDLE_MAX} characters.`,
+        ],
+        description:
+            "User's middle name; must meet minimum and maximum length requirements.",
+    },
+    last: {
+        type: String,
+        trim: true,
+        match: [
+            userConstants.pattern.NAME,
+            'Invalid last name format. Names should only contain alphabetic characters and appropriate separators like spaces. For example, "John", "Mary Anne".',
+        ],
+        minlength: [
+            userConstants.lengths.NAME.LAST_MIN,
+            `Name should be at least ${userConstants.lengths.NAME.LAST_MIN} characters.`,
+        ],
+        maxlength: [
+            userConstants.lengths.NAME.LAST_MAX,
+            `Name should not exceed ${userConstants.lengths.NAME.LAST_MAX} characters.`,
+        ],
+        description:
+            "User's last name; must meet minimum and maximum length requirements.",
+    },
+    nick: {
+        type: String,
+        trim: true,
+        match: [
+            userConstants.pattern.NAME,
+            'Invalid nick name format. Names should only contain alphabetic characters and appropriate separators like spaces. For example, "John", "Mary Anne".',
+        ],
+        minlength: [
+            userConstants.lengths.NAME.NICK_MIN,
+            `Name should be at least ${userConstants.lengths.NAME.NICK_MIN} characters.`,
+        ],
+        maxlength: [
+            userConstants.lengths.NAME.NICK_MAX,
+            `Name should not exceed ${userConstants.lengths.NAME.NICK_MAX} characters.`,
+        ],
+        description:
+            "User's nickname; must meet minimum and maximum length requirements.",
+    },
+});
+
+/**
+ * @schema addressSchema
+ * Captures user address information, including country, state, and city, with each field stored as a trimmed string to ensure accurate geographic data capture.
+ */
+const addressSchema = new Schema({
+    country: {
+        type: String,
+        trim: true,
+        description:
+            'The country where the user resides. This field stores the name of the country as a string.',
+    },
+    state: {
+        type: String,
+        trim: true,
+        description:
+            'The state or region within the country where the user is located. This field is used to store the state or regional name.',
+    },
+    city: {
+        type: String,
+        trim: true,
+        description:
+            'The city or locality within the state where the user lives. This field captures the city name.',
+    },
+});
+
+/**
+ * @schema passwordHashSchema
+ * Stores a hashed version of the user's password, necessary for secure authentication and ensuring data privacy.
+ */
+const passwordHashSchema = {
+    type: String,
+    trim: true,
+    required: [true, 'A password is necessary to secure your account.'],
+    description: 'Stores the hashed password for secure authentication.',
+};
+
+/**
+ * @schema roleSchema
+ * References a RoleModel to apply role-based access control (RBAC) mechanisms, which restrict access based on the user's assigned role.
+ */
+const roleSchema = {
+    type: Schema.Types.ObjectId,
+    ref: 'Roles',
+    default: undefined,
+    description:
+        "Defines the user's role within the application by referencing the RoleModel, restricting access based on the role defined in the RoleModel.",
+};
+
+/**
+ * @schema twoFactorEnabledSchema
+ * Indicates whether two-factor authentication is enabled for the user, providing an additional layer of security.
+ */
+const twoFactorEnabledSchema = {
+    type: Boolean,
+    trim: true,
+    default: false,
+    description:
+        'Boolean flag to indicate if two-factor authentication is enabled for added security.',
+};
+
+/**
+ * @schema twoFactorSecretSchema
+ * Stores the secret key for two-factor authentication, crucial for generating and validating tokens used in the login process.
+ */
+const twoFactorSecretSchema = {
+    type: String,
+    trim: true,
+    description:
+        'Secret key for two-factor authentication, used to generate tokens.',
+};
+
+/**
+ * @schema mustChangePasswordSchema
+ * Flags whether the user is required to change their password at the next login, often used after administrative resets or potential security breaches.
+ */
+const mustChangePasswordSchema = {
+    type: Boolean,
+    trim: true,
+    default: false,
+    description:
+        'Flag to indicate if the user must change their password at next login for security reasons.',
+};
+
+/**
+ * @schema resetPasswordVerifyTokenSchema
+ * Holds a token used to verify the user's identity during the password reset process, helping secure the process against unauthorized access.
+ */
+const resetPasswordVerifyTokenSchema = {
+    type: String,
+    trim: true,
+    description:
+        "Token used to verify the user's identity for password reset process.",
+};
+
+/**
+ * @schema resetPasswordVerifyTokenExpiresSchema
+ * Specifies when the reset password verification token expires, adding a time constraint to the token's validity to enhance security.
+ */
+const resetPasswordVerifyTokenExpiresSchema = {
+    type: Date,
+    trim: true,
+    description:
+        ' Expiration date and time for the reset password verification token.',
+};
+
+/**
+ * @schema urlSchema
+ * Validates URLs to ensure they are properly formatted, applying a maximum length restriction to accommodate database constraints.
+ */
+const urlSchema = {
+    type: String,
+    trim: true,
+    match: [
+        patterns.URL,
+        'Invalid website format. Please enter a valid website.',
+    ],
+    maxlength: [
+        constants.lengths.WEBSITE_URL_MAX,
+        `Your URL must be less than ${constants.lengths.WEBSITE_URL_MAX} characters long.`,
+    ],
+    description:
+        'A unique URL associated with the user, typically for a personal or professional website.',
+};
+
+/**
+ * @schema emailSchema
+ * Validates email addresses to ensure they are unique and properly formatted, crucial for user identification and communication.
+ */
+const emailSchema = {
+    type: String,
+    trim: true,
+    lowercase: true,
+    sparse: true,
+    unique: [
+        true,
+        'This email address is already in use. Please use a different email address.',
+    ],
+    required: [true, 'An email address is required to register.'],
+    match: [
+        patterns.EMAIL,
+        'Invalid email format. Please enter a valid email address.',
+    ],
+    minlength: [
+        constants.lengths.EMAIL_MIN,
+        `Email should be at least ${constants.lengths.EMAIL_MIN} characters long.`,
+    ],
+    maxlength: [
+        constants.lengths.EMAIL_MAX,
+        `Email should not exceed ${constants.lengths.EMAIL_MAX} characters long.`,
+    ],
+    description: 'Each email validated for uniqueness and proper format.',
+};
+
+/**
+ * @schema isPrimaryEmailSchema
+ * Indicates if the specified email is the primary email for the user, ensuring that only one email is marked as primary.
+ */
+const isPrimaryEmailSchema = {
+    type: Boolean,
+    default: false,
+    description:
+        'Indicates if this is the primary email for the user. Only one email should be set as primary at any time.',
+};
+
+/**
+ * @schema isEmailVerifiedSchema
+ * Checks if the user's email has been verified, an important step in confirming the authenticity of the user's contact information.
+ */
+const isEmailVerifiedSchema = {
+    type: Boolean,
+    default: false,
+    description: "Flag to indicate whether the user's email has been verified.",
+};
+
+/**
+ * @schema emailVerifyTokenSchema
+ * Stores a token used during the email verification process, linked with actions like confirming an email change.
+ */
+const emailVerifyTokenSchema = {
+    type: String,
+    trim: true,
+    description: 'Token used for email verification process.',
+};
+
+/**
+ * @schema emailVerifyTokenExpiresSchema
+ * Defines the expiration time for the email verification token, securing the process by limiting the time window in which the token is valid.
+ */
+const emailVerifyTokenExpiresSchema = {
+    type: Date,
+    trim: true,
+    description: 'Expiration date and time for the email verification token.',
+};
+
+/**
+ * @schema mobileSchema
+ * Validates mobile phone numbers, ensuring they are unique and properly formatted. This is important for systems that use mobile numbers as an alternative form of user identification.
+ */
+const mobileSchema = {
+    type: String,
+    trim: true,
+    sparse: true,
+    unique: [
+        true,
+        'This mobile number is already registered. Please use a different mobile number.',
+    ],
+    match: [
+        patterns.MOBILE,
+        'Invalid mobile number format. Please enter a valid mobile number.',
+    ],
+    minlength: [
+        constants.lengths.MOBILE_MIN,
+        `Mobile number should have at least ${constants.lengths.MOBILE_MIN} digits.`,
+    ],
+    maxlength: [
+        constants.lengths.MOBILE_MAX,
+        `Mobile number should not exceed ${constants.lengths.MOBILE_MAX} digits.`,
+    ],
+    description: 'Mobile number, must be unique and properly formatted.',
+};
+
+/**
+ * @schema isPrimaryMobileSchema
+ * Identifies if the stored mobile number is the primary contact number for the user, used in systems that handle multiple contact numbers.
+ */
+const isPrimaryMobileSchema = {
+    type: Boolean,
+    default: false,
+    description:
+        'Indicates if this is the primary mobile for the user. Only one mobile should be set as primary at any time.',
+};
+
+/**
+ * @schema isMobileVerifiedSchema
+ * Indicates whether the user's mobile number has been verified, an important factor for systems relying on SMS or phone calls for authentication or notifications.
+ */
+const isMobileVerifiedSchema = {
+    type: Boolean,
+    default: false,
+    description:
+        "Flag to indicate whether the user's mobile number has been verified.",
+};
+
+/**
+ * @schema mobileVerifyTokenSchema
+ * Stores a token used to verify the mobile number, essential for confirming the user's control over the listed phone number.
+ */
+const mobileVerifyTokenSchema = {
+    type: String,
+    trim: true,
+    description: 'Token used for mobile number verification process.',
+};
+
+/**
+ * @schema mobileVerifyTokenExpiresSchema
+ * Specifies the expiration date and time for the mobile verification token, ensuring the token is used within a designated timeframe.
+ */
+const mobileVerifyTokenExpiresSchema = {
+    type: Date,
+    trim: true,
+    description: 'Expiration date and time for the mobile verification token.',
+};
+
+/**
+ * @schema isActiveSchema
+ * Flags whether the user's profile or account is active or has been deactivated, allowing for easy management of user status within the system.
+ */
+const isActiveSchema = {
+    type: Boolean,
+    default: true,
+    description:
+        'Flag to indicate whether the document is active or deactivated.',
+};
+
+/**
+ * @schema facebookSchema
+ * Stores and validates a Facebook profile URL, ensuring it is unique and correctly formatted. This is used for linking a user's social media profile.
+ */
+const facebookSchema = {
+    type: String,
+    trim: true,
+    sparse: true,
+    unique: [true, 'This Facebook URL is already linked to another account.'],
+    match: [
+        patterns.FACEBOOK_URL,
+        'Invalid facebook url format. Please enter a valid facebook url.',
+    ],
+    maxlength: [
+        constants.lengths.WEBSITE_URL_MAX,
+        `Your Facebook URL must be less than ${constants.lengths.WEBSITE_URL_MAX} characters long.`,
+    ],
+    description:
+        'The Facebook URL must be unique across all users and follow the predefined URL pattern.',
+};
+
+/**
+ * @schema twitterSchema
+ * Manages Twitter handles, ensuring each is unique and follows a specific format, which is crucial for integrating social media functionalities.
+ */
+const twitterSchema = {
+    type: String,
+    trim: true,
+    sparse: true,
+    unique: [true, 'This Twitter handle is already linked to another account.'],
+    match: [
+        patterns.TWITTER_URL,
+        'Invalid twitter url format. Please enter a valid twitter url.',
+    ],
+    maxlength: [
+        constants.lengths.WEBSITE_URL_MAX,
+        `Your Twitter handle must be less than ${constants.lengths.WEBSITE_URL_MAX} characters long.`,
+    ],
+    description:
+        'The Twitter handle must be unique and comply with a specific URL format.',
+};
+
+/**
+ * @schema linkedInSchema
+ * Handles LinkedIn profile URLs, ensuring each is unique and adheres to a specific format, facilitating professional networking integrations.
+ */
+const linkedInSchema = {
+    type: String,
+    trim: true,
+    sparse: true,
+    unique: [
+        true,
+        'This LinkedIn profile is already linked to another account.',
+    ],
+    match: [
+        patterns.LINKEDIN_URL,
+        'Invalid linkedIn url format. Please enter a valid linkedIn url.',
+    ],
+    maxlength: [
+        constants.lengths.WEBSITE_URL_MAX,
+        `Your LinkedIn URL must be less than ${constants.lengths.WEBSITE_URL_MAX} characters long.`,
+    ],
+    description:
+        'LinkedIn URLs are unique to each user, adhering to the required LinkedIn format.',
+};
+
+/**
+ * @schema githubSchema
+ * Manages GitHub usernames, validating uniqueness and format to integrate coding community profiles for user accounts.
+ */
+const githubSchema = {
+    type: String,
+    trim: true,
+    sparse: true,
+    unique: [
+        true,
+        'This GitHub username is already linked to another account.',
+    ],
+    match: [
+        patterns.GITHUB_URL,
+        'Invalid github url format. Please enter a valid github url.',
+    ],
+    maxlength: [
+        constants.lengths.WEBSITE_URL_MAX,
+        `Your GitHub username must be less than ${constants.lengths.WEBSITE_URL_MAX} characters long.`,
+    ],
+    description:
+        "GitHub's usernames need to follow a specific format and be unique among all system users.",
+};
+
+/**
+ * @schema companySchema
+ * Stores information about a user's employer, including name and contact details, providing context for professional relationships within the application.
+ */
+const companySchema = new Schema({
+    // TODO: suggest company name when a user try to add company
+    name: {
+        type: String,
+        trim: true,
+        maxlength: [
+            userConstants.lengths.COMPANY.NAME_MAX,
+            `Company name should not exceed ${userConstants.lengths.COMPANY.NAME_MAX} characters.`,
+        ],
+        description:
+            "Optional field for storing the name of the user's employer, with validation on length.",
+    },
+    address: addressSchema,
+    website: urlSchema,
+    facebook: facebookSchema,
+    twitter: twitterSchema,
+    linkedIn: linkedInSchema,
+    github: githubSchema,
+});
+
+/**
+ * @schema externalOAuthSchema
+ * Handles OAuth identifiers for external accounts like Google, Facebook, Twitter, LinkedIn, and GitHub, ensuring each identifier is unique and properly stored.
+ */
+const externalOAuthSchema = new Schema({
+    googleId: {
+        type: String,
+        trim: true,
+        sparse: true,
+        unique: [true, 'This Google account is already registered.'],
+        maxlength: [
+            constants.lengths.EXTERNAL_AUTH_ID_MAX,
+            `The Google ID must be less than ${constants.lengths.EXTERNAL_AUTH_ID_MAX} characters.`,
+        ],
+        description:
+            "Google ID is used for identifying user's Google account for OAuth authentication purposes. Must be unique.",
+    },
+    facebookId: {
+        type: String,
+        trim: true,
+        sparse: true,
+        unique: [true, 'This Facebook account is already registered.'],
+        maxlength: [
+            constants.lengths.EXTERNAL_AUTH_ID_MAX,
+            `The Facebook ID must be less than ${constants.lengths.EXTERNAL_AUTH_ID_MAX} characters.`,
+        ],
+        description:
+            "Facebook ID is used for identifying user's Facebook account in OAuth integrations. Ensures uniqueness in the system.",
+    },
+    twitterId: {
+        type: String,
+        trim: true,
+        sparse: true,
+        unique: [true, 'This Twitter account is already registered.'],
+        maxlength: [
+            constants.lengths.EXTERNAL_AUTH_ID_MAX,
+            `The Twitter ID must be less than ${constants.lengths.EXTERNAL_AUTH_ID_MAX} characters.`,
+        ],
+        description:
+            "Twitter ID is used for OAuth authentication and to link the user's Twitter profile to their account on this system. It must be unique.",
+    },
+    linkedInId: {
+        type: String,
+        trim: true,
+        sparse: true,
+        unique: [true, 'This LinkedIn account is already registered.'],
+        maxlength: [
+            constants.lengths.EXTERNAL_AUTH_ID_MAX,
+            `The LinkedIn ID must be less than ${constants.lengths.EXTERNAL_AUTH_ID_MAX} characters.`,
+        ],
+        description:
+            "LinkedIn ID is uniquely associated with the user's LinkedIn account for authentication and profile linkage purposes.",
+    },
+    githubId: {
+        type: String,
+        trim: true,
+        sparse: true,
+        unique: [true, 'This GitHub account is already registered.'],
+        maxlength: [
+            constants.lengths.EXTERNAL_AUTH_ID_MAX,
+            `The GitHub ID must be less than ${constants.lengths.EXTERNAL_AUTH_ID_MAX} characters.`,
+        ],
+        description:
+            "GitHub ID is a unique identifier used to link and authenticate the user's GitHub profile within our application.",
+    },
+});
+
+/**
+ * @schema loginSchema
+ * Tracks details of login attempts, both failed and successful, providing insights into user behavior and potential security incidents.
+ */
+const loginSchema = new Schema({
+    failed: {
+        device: [
+            {
+                details: {
+                    type: String,
+                    description:
+                        'Detailed information about the device used during the failed attempt, such as device type, browser, and IP address.',
+                },
+                dateTime: {
+                    type: Date,
+                    description:
+                        'The exact date and time when the failed login attempt occurred.',
+                },
+            },
+        ],
+    },
+    successful: {
+        device: [
+            {
+                details: {
+                    type: String,
+                    description:
+                        'Detailed information about the device used during the successful login, such as device type, browser, and IP address.',
+                },
+                dateTime: {
+                    type: Date,
+                    description:
+                        'The exact date and time when the successful login occurred.',
+                },
+            },
+        ],
+    },
+});
+
+/**
+ * @schema sessionsSchema
+ * Manages session information, including tokens and their expiration times, crucial for maintaining secure and valid user sessions within the application.
+ */
+const sessionsSchema = new Schema({
+    token: {
+        type: String,
+        trim: true,
+        required: [
+            true,
+            'A session token is required. This token is crucial for authenticating user sessions and ensuring secure interaction with the application.',
+        ],
+        description:
+            'A unique session token that is used to authenticate user sessions. This token is generated upon successful login and is necessary to access secure parts of the application.',
+    },
+    expiresAt: {
+        type: Date,
+        trim: true,
+        required: [
+            true,
+            'An expiration date for the session token is required. Setting an expiration date helps maintain security by invalidating the session token after a period of time.',
+        ],
+        description:
+            'The date and time when the session token expires. This mechanism is used to ensure that sessions are automatically terminated after a certain period, enhancing the security by preventing old session tokens from being used indefinitely.',
+    },
+});
+
+/**
+ * @schema activitiesSchema
+ * Captures user activities within the application, detailing the type of action, associated metadata, and the exact time it occurred, facilitating audits and behavior analysis.
+ */
+const activitiesSchema = new Schema({
+    category: {
+        type: String,
+        enum: Object.values(userConstants.activityType),
+        description:
+            'Describes the category of activity performed by the user, such as security, appearance.',
+    },
+    action: {
+        type: String,
+        required: [
+            true,
+            'Recording the type of action is necessary to track user activities accurately.',
+        ],
+        description:
+            'Describes the type of activity performed by the user, such as login, logout, data entry, etc.',
+    },
+    details: {
+        type: String,
+        required: [
+            true,
+            'Action details is necessary to track user activities accurately.',
+        ],
+        description:
+            'Details activity performed by the user, such as login, logout, data entry, etc.',
+    },
+    date: {
+        type: Date,
+        default: Date.now,
+        description:
+            'The exact date and time when the activity occurred. Automatically set to the current date and time by default.',
+    },
+    metadata: {
+        type: Schema.Types.Mixed,
+        description:
+            'Additional details associated with the activity, stored in a flexible schema-less format. This can include specifics like IP address, device used, location, or other context-specific data.',
+    },
+});
+
+/**
+ * @schema appearanceSchema
+ * Stores user preferences for application themes, allowing for a customized look and feel of the user interface based on individual preferences.
+ */
+const appearanceSchema = new Schema({
+    theme: {
+        name: {
+            type: String,
+            trim: true,
+            description:
+                'The name of the theme chosen by the user. This setting determines the overall look and feel of the application, enabling a personalized user experience.',
+        },
+    },
+});
+
+/**
+ * @schema profileVisibilitySchema
+ * Controls the visibility of user profiles to others within the application, allowing users to manage privacy settings according to their preferences.
+ */
+const profileVisibilitySchema = {
+    type: String,
+    trim: true,
+    enum: ['public', 'private', 'friends'],
+    default: 'public',
+    description: 'Controls the visibility of the user profile to other users.',
+};
+
+/**
+ * @schema createdByAdminSchema
+ * References the admin who created the record, used for tracking which administrator has made changes to user data or profiles.
+ */
+const createdByAdminSchema = {
+    type: Schema.Types.ObjectId,
+    ref: 'Admin',
+    description:
+        'Reference to the admin who created this record, used for tracking record ownership.',
+};
+
+/**
+ * @schema updatedByAdminSchema
+ * Tracks the last admin to update the record, ensuring accountability and providing a trace of administrative actions on user data.
+ */
+const updatedByAdminSchema = {
+    type: Schema.Types.ObjectId,
+    ref: 'Admin',
+    description:
+        'Reference to the admin who last updated this record, used for tracking changes and record ownership.',
+};
+
+const sharedSchema = {
+    usernameSchema,
+    dateOfBirthSchema,
+    bioSchema,
+    pronounsSchema,
+    numericIdSchema,
+    userIdSchema,
+    imageSchema,
+    nameSchema,
+    addressSchema,
+    passwordHashSchema,
+    roleSchema,
+    twoFactorEnabledSchema,
+    twoFactorSecretSchema,
+    mustChangePasswordSchema,
+    companySchema,
+    resetPasswordVerifyTokenSchema,
+    resetPasswordVerifyTokenExpiresSchema,
+    urlSchema,
+    emailSchema,
+    isPrimaryEmailSchema,
+    isEmailVerifiedSchema,
+    emailVerifyTokenSchema,
+    emailVerifyTokenExpiresSchema,
+    mobileSchema,
+    isPrimaryMobileSchema,
+    isMobileVerifiedSchema,
+    mobileVerifyTokenSchema,
+    mobileVerifyTokenExpiresSchema,
+    isActiveSchema,
+    facebookSchema,
+    twitterSchema,
+    linkedInSchema,
+    githubSchema,
+    externalOAuthSchema,
+    loginSchema,
+    sessionsSchema,
+    activitiesSchema,
+    appearanceSchema,
+    profileVisibilitySchema,
+    createdByAdminSchema,
+    updatedByAdminSchema,
+};
+
+export default sharedSchema;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-accessTypesConstants.html">accessTypesConstants</a></li><li><a href="module-asyncErrorHandlerService.html">asyncErrorHandlerService</a></li><li><a href="module-constants.html">constants</a></li><li><a href="module-corsConfiguration.html">corsConfiguration</a></li><li><a href="module-defaultConstants.html">defaultConstants</a></li><li><a href="module-environment.html">environment</a></li><li><a href="module-errorHandlingService.html">errorHandlingService</a></li><li><a href="module-helmetConfiguration.html">helmetConfiguration</a></li><li><a href="module-routesConstants.html">routesConstants</a></li><li><a href="module-uploadMiddleware.html">uploadMiddleware</a></li><li><a href="module-userProfileService.html">userProfileService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ACCEPTED">ACCEPTED</a></li><li><a href="global.html#ALREADY_REPORTED">ALREADY_REPORTED</a></li><li><a href="global.html#BAD_GATEWAY">BAD_GATEWAY</a></li><li><a href="global.html#BAD_REQUEST">BAD_REQUEST</a></li><li><a href="global.html#BMP">BMP</a></li><li><a href="global.html#CONFLICT">CONFLICT</a></li><li><a href="global.html#CONTINUE">CONTINUE</a></li><li><a href="global.html#CREATED">CREATED</a></li><li><a href="global.html#CSS">CSS</a></li><li><a href="global.html#CSV">CSV</a></li><li><a href="global.html#DIGITS">DIGITS</a></li><li><a href="global.html#EACCES">EACCES</a></li><li><a href="global.html#EADDRINUSE">EADDRINUSE</a></li><li><a href="global.html#EAGAIN">EAGAIN</a></li><li><a href="global.html#EARLY_HINTS">EARLY_HINTS</a></li><li><a href="global.html#ECONNREFUSED">ECONNREFUSED</a></li><li><a href="global.html#ECONNRESET">ECONNRESET</a></li><li><a href="global.html#EEXIST">EEXIST</a></li><li><a href="global.html#EISDIR">EISDIR</a></li><li><a href="global.html#EMAIL">EMAIL</a></li><li><a href="global.html#EMFILE">EMFILE</a></li><li><a href="global.html#ENOENT">ENOENT</a></li><li><a href="global.html#ENOTDIR">ENOTDIR</a></li><li><a href="global.html#ENOTFOUND">ENOTFOUND</a></li><li><a href="global.html#EPERM">EPERM</a></li><li><a href="global.html#EPIPE">EPIPE</a></li><li><a href="global.html#EPROTO">EPROTO</a></li><li><a href="global.html#ETIMEDOUT">ETIMEDOUT</a></li><li><a href="global.html#EWOULDBLOCK">EWOULDBLOCK</a></li><li><a href="global.html#EXPECTATION_FAILED">EXPECTATION_FAILED</a></li><li><a href="global.html#FACEBOOK_URL">FACEBOOK_URL</a></li><li><a href="global.html#FAILED_DEPENDENCY">FAILED_DEPENDENCY</a></li><li><a href="global.html#FORBIDDEN">FORBIDDEN</a></li><li><a href="global.html#FOUND">FOUND</a></li><li><a href="global.html#GATEWAY_TIMEOUT">GATEWAY_TIMEOUT</a></li><li><a href="global.html#GIF">GIF</a></li><li><a href="global.html#GITHUB_URL">GITHUB_URL</a></li><li><a href="global.html#GONE">GONE</a></li><li><a href="global.html#HTML">HTML</a></li><li><a href="global.html#HTTP_VERSION_NOT_SUPPORTED">HTTP_VERSION_NOT_SUPPORTED</a></li><li><a href="global.html#ICO">ICO</a></li><li><a href="global.html#IM_A_TEAPOT">IM_A_TEAPOT</a></li><li><a href="global.html#IM_USED">IM_USED</a></li><li><a href="global.html#INSUFFICIENT_STORAGE">INSUFFICIENT_STORAGE</a></li><li><a href="global.html#INTERNAL_SERVER_ERROR">INTERNAL_SERVER_ERROR</a></li><li><a href="global.html#ISO_8601_DATE">ISO_8601_DATE</a></li><li><a href="global.html#JPG">JPG</a></li><li><a href="global.html#JS">JS</a></li><li><a href="global.html#JSON">JSON</a></li><li><a href="global.html#LENGTH_REQUIRED">LENGTH_REQUIRED</a></li><li><a href="global.html#LINKEDIN_URL">LINKEDIN_URL</a></li><li><a href="global.html#LOCKED">LOCKED</a></li><li><a href="global.html#LOOP_DETECTED">LOOP_DETECTED</a></li><li><a href="global.html#LOWERCASE">LOWERCASE</a></li><li><a href="global.html#MD">MD</a></li><li><a href="global.html#METHOD_NOT_ALLOWED">METHOD_NOT_ALLOWED</a></li><li><a href="global.html#MISDIRECTED_REQUEST">MISDIRECTED_REQUEST</a></li><li><a href="global.html#MOBILE">MOBILE</a></li><li><a href="global.html#MOVED_PERMANENTLY">MOVED_PERMANENTLY</a></li><li><a href="global.html#MP3">MP3</a></li><li><a href="global.html#MP4">MP4</a></li><li><a href="global.html#MULTIPLE_CHOICES">MULTIPLE_CHOICES</a></li><li><a href="global.html#MULTI_STATUS">MULTI_STATUS</a></li><li><a href="global.html#NETWORK_AUTHENTICATION_REQUIRED">NETWORK_AUTHENTICATION_REQUIRED</a></li><li><a href="global.html#NON_AUTHORITATIVE_INFORMATION">NON_AUTHORITATIVE_INFORMATION</a></li><li><a href="global.html#NOT_ACCEPTABLE">NOT_ACCEPTABLE</a></li><li><a href="global.html#NOT_EXTENDED">NOT_EXTENDED</a></li><li><a href="global.html#NOT_FOUND">NOT_FOUND</a></li><li><a href="global.html#NOT_IMPLEMENTED">NOT_IMPLEMENTED</a></li><li><a href="global.html#NOT_MODIFIED">NOT_MODIFIED</a></li><li><a href="global.html#NO_CONTENT">NO_CONTENT</a></li><li><a href="global.html#OK">OK</a></li><li><a href="global.html#PARTIAL_CONTENT">PARTIAL_CONTENT</a></li><li><a href="global.html#PASSWORD">PASSWORD</a></li><li><a href="global.html#PAYLOAD_TOO_LARGE">PAYLOAD_TOO_LARGE</a></li><li><a href="global.html#PAYMENT_REQUIRED">PAYMENT_REQUIRED</a></li><li><a href="global.html#PDF">PDF</a></li><li><a href="global.html#PERMANENT_REDIRECT">PERMANENT_REDIRECT</a></li><li><a href="global.html#PNG">PNG</a></li><li><a href="global.html#PRECONDITION_FAILED">PRECONDITION_FAILED</a></li><li><a href="global.html#PRECONDITION_REQUIRED">PRECONDITION_REQUIRED</a></li><li><a href="global.html#PROCESSING">PROCESSING</a></li><li><a href="global.html#PROFILE_VISIBILITY">PROFILE_VISIBILITY</a></li><li><a href="global.html#PROXY_AUTHENTICATION_REQUIRED">PROXY_AUTHENTICATION_REQUIRED</a></li><li><a href="global.html#RANGE_NOT_SATISFIABLE">RANGE_NOT_SATISFIABLE</a></li><li><a href="global.html#RAR">RAR</a></li><li><a href="global.html#REQUEST_HEADER_FIELDS_TOO_LARGE">REQUEST_HEADER_FIELDS_TOO_LARGE</a></li><li><a href="global.html#REQUEST_TIMEOUT">REQUEST_TIMEOUT</a></li><li><a href="global.html#RESET_CONTENT">RESET_CONTENT</a></li><li><a href="global.html#SEE_OTHER">SEE_OTHER</a></li><li><a href="global.html#SERVICE_UNAVAILABLE">SERVICE_UNAVAILABLE</a></li><li><a href="global.html#SPECIAL_CHARACTERS">SPECIAL_CHARACTERS</a></li><li><a href="global.html#SVG">SVG</a></li><li><a href="global.html#SWITCHING_PROTOCOLS">SWITCHING_PROTOCOLS</a></li><li><a href="global.html#TEMPORARY_REDIRECT">TEMPORARY_REDIRECT</a></li><li><a href="global.html#TIFF">TIFF</a></li><li><a href="global.html#TOO_EARLY">TOO_EARLY</a></li><li><a href="global.html#TOO_MANY_REQUESTS">TOO_MANY_REQUESTS</a></li><li><a href="global.html#TWITTER_URL">TWITTER_URL</a></li><li><a href="global.html#TXT">TXT</a></li><li><a href="global.html#UNAUTHORIZED">UNAUTHORIZED</a></li><li><a href="global.html#UNAVAILABLE_FOR_LEGAL_REASONS">UNAVAILABLE_FOR_LEGAL_REASONS</a></li><li><a href="global.html#UNPROCESSABLE_ENTITY">UNPROCESSABLE_ENTITY</a></li><li><a href="global.html#UNSUPPORTED_MEDIA_TYPE">UNSUPPORTED_MEDIA_TYPE</a></li><li><a href="global.html#UPGRADE_REQUIRED">UPGRADE_REQUIRED</a></li><li><a href="global.html#UPPERCASE">UPPERCASE</a></li><li><a href="global.html#URI_TOO_LONG">URI_TOO_LONG</a></li><li><a href="global.html#URL">URL</a></li><li><a href="global.html#USE_PROXY">USE_PROXY</a></li><li><a href="global.html#VARIANT_ALSO_NEGOTIATES">VARIANT_ALSO_NEGOTIATES</a></li><li><a href="global.html#WAV">WAV</a></li><li><a href="global.html#XML">XML</a></li><li><a href="global.html#ZIP">ZIP</a></li><li><a href="global.html#actionTypes">actionTypes</a></li><li><a href="global.html#activitiesSchema">activitiesSchema</a></li><li><a href="global.html#activityType">activityType</a></li><li><a href="global.html#addressSchema">addressSchema</a></li><li><a href="global.html#adminActivityLoggerSchema">adminActivityLoggerSchema</a></li><li><a href="global.html#adminLogin">adminLogin</a></li><li><a href="global.html#adminLogout">adminLogout</a></li><li><a href="global.html#adminSchema">adminSchema</a></li><li><a href="global.html#appearanceSchema">appearanceSchema</a></li><li><a href="global.html#asyncErrorHandlerService">asyncErrorHandlerService</a></li><li><a href="global.html#authenticateMiddleware">authenticateMiddleware</a></li><li><a href="global.html#bioSchema">bioSchema</a></li><li><a href="global.html#booleanField">booleanField</a></li><li><a href="global.html#companySchema">companySchema</a></li><li><a href="global.html#compressionConfiguration">compressionConfiguration</a></li><li><a href="global.html#configuration">configuration</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createGenericcreationcontrollerthatcanhandlerequestswithorwithoutfileuploadsaspartofthedatapayload.">createGeneric creation controller that can handle requests with or without file uploads as part of the data payload.</a></li><li><a href="global.html#createAuthenticationToken">createAuthenticationToken</a></li><li><a href="global.html#createDefaultPermissionList">createDefaultPermissionList</a></li><li><a href="global.html#createDefaultRole">createDefaultRole</a></li><li><a href="global.html#createFileNameSchema">createFileNameSchema</a></li><li><a href="global.html#createHashedPassword">createHashedPassword</a></li><li><a href="global.html#createNewAdmin">createNewAdmin</a></li><li><a href="global.html#createNewUserCreatesanewuserbyinvokingtheprovidedservicefunctionwithnecessaryparametersextractedfromtherequest.Utilizeshostdataandrequesteridentificationforloggingandservicecustomization.">createNewUserCreates a new user by invoking the provided service function with necessary parameters extracted from the request.Utilizes host data and requester identification for logging and service customization.</a></li><li><a href="global.html#createPermission">createPermission</a></li><li><a href="global.html#createPermissionSchema">createPermissionSchema</a></li><li><a href="global.html#createPronouns">createPronouns</a></li><li><a href="global.html#createPronounsSchema">createPronounsSchema</a></li><li><a href="global.html#createRole">createRole</a></li><li><a href="global.html#createRoleSchema">createRoleSchema</a></li><li><a href="global.html#createStringField">createStringField</a></li><li><a href="global.html#createWithIdCreatesaresourceassociatedwithaspecificIDprovidedintherequestparameters.Thiscontrollerisusedwhenthecreationofaresourceisdependentonanexistingentity.">createWithIdCreates a resource associated with a specific ID provided in the request parameters. This controller is used when the creation of a resource is dependent on an existing entity.</a></li><li><a href="global.html#createdByAdminSchema">createdByAdminSchema</a></li><li><a href="global.html#customObjectIdValidator">customObjectIdValidator</a></li><li><a href="global.html#dateField">dateField</a></li><li><a href="global.html#dateOfBirthSchema">dateOfBirthSchema</a></li><li><a href="global.html#decodeAuthenticationToken">decodeAuthenticationToken</a></li><li><a href="global.html#deleteAccount">deleteAccount</a></li><li><a href="global.html#deleteByIdDeletesaspecificresourcebyitsID,providedintherequestparameters.Thiscontrollerensuressecureandauditabledeletionprocesses.">deleteByIdDeletes a specific resource by its ID, provided in the request parameters. This controller ensures secure and auditable deletion processes.</a></li><li><a href="global.html#deleteFile">deleteFile</a></li><li><a href="global.html#deleteListAllowsforbulkdeletionofresourcesbasedonalistofIDsprovidedintherequestquery.Thisfunctionensuresefficientandsecuredeletionofmultipleentries.">deleteListAllows for bulk deletion of resources based on a list of IDs provided in the request query. This function ensures efficient and secure deletion of multiple entries.</a></li><li><a href="global.html#deletePermissionById">deletePermissionById</a></li><li><a href="global.html#deletePermissionList">deletePermissionList</a></li><li><a href="global.html#deletePronounsById">deletePronounsById</a></li><li><a href="global.html#deletePronounsList">deletePronounsList</a></li><li><a href="global.html#deleteResourceByIdDeletesasingleresourcebyID,includinganyassociatedresourcessuchasfilesstoredinGoogleDrive.Itlogstheactionandhandleserrorsappropriately,returningasuccessorerrorresponsebasedontheoutcomeoftheoperation.">deleteResourceByIdDeletes a single resource by ID, including any associated resources such as files stored in Google Drive. It logs the action andhandles errors appropriately, returning a success or error response based on the outcome of the operation.</a></li><li><a href="global.html#deleteResourcesByListDeletesmultipleresourcesidentifiedbyanarrayofIDs,handlingeachdeletionindividuallyandmanagingassociatedresourceslikefiles.Itprovidesdetailedresultsofthedeletionprocess,includingcountsofdeleted,notfound,andfaileddeletions.">deleteResourcesByListDeletes multiple resources identified by an array of IDs, handling each deletion individually and managing associated resources like files.It provides detailed results of the deletion process, including counts of deleted, not found, and failed deletions.</a></li><li><a href="global.html#deleteRoleById">deleteRoleById</a></li><li><a href="global.html#deleteRoleByList">deleteRoleByList</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#detectController">detectController</a></li><li><a href="global.html#detectService">detectService</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#emailField">emailField</a></li><li><a href="global.html#emailSchema">emailSchema</a></li><li><a href="global.html#emailVerifyTokenExpiresSchema">emailVerifyTokenExpiresSchema</a></li><li><a href="global.html#emailVerifyTokenSchema">emailVerifyTokenSchema</a></li><li><a href="global.html#envVarsSchema">envVarsSchema</a></li><li><a href="global.html#errorResponse">errorResponse</a></li><li><a href="global.html#externalOAuthSchema">externalOAuthSchema</a></li><li><a href="global.html#facebookSchema">facebookSchema</a></li><li><a href="global.html#fileBufferValidationSchema">fileBufferValidationSchema</a></li><li><a href="global.html#fileField">fileField</a></li><li><a href="global.html#generateExtensionRegexPattern">generateExtensionRegexPattern</a></li><li><a href="global.html#generateHashedToken">generateHashedToken</a></li><li><a href="global.html#generateTempPassword">generateTempPassword</a></li><li><a href="global.html#generateVerificationToken">generateVerificationToken</a></li><li><a href="global.html#getAccountLog">getAccountLog</a></li><li><a href="global.html#getActivityLog">getActivityLog</a></li><li><a href="global.html#getAppearance">getAppearance</a></li><li><a href="global.html#getAuthenticationToken">getAuthenticationToken</a></li><li><a href="global.html#getByIdFetchesaspecificresourcebyIDprovidedintherequestparameters,utilizingrequesterdataforaccesscontrolandlogging.">getByIdFetches a specific resource by ID provided in the request parameters, utilizing requester data for access control and logging.</a></li><li><a href="global.html#getByRequesterRetrievesinformationspecifictotherequesterbasedontheiridentificationinthesystem.">getByRequesterRetrieves information specific to the requester based on their identification in the system.</a></li><li><a href="global.html#getEnvVar">getEnvVar</a></li><li><a href="global.html#getHostData">getHostData</a></li><li><a href="global.html#getInt">getInt</a></li><li><a href="global.html#getListRetrievesalistofresourcesbasedonthequeryparametersprovidedbytherequester.">getListRetrieves a list of resources based on the query parameters provided by the requester.</a></li><li><a href="global.html#getPermissionById">getPermissionById</a></li><li><a href="global.html#getPermissionList">getPermissionList</a></li><li><a href="global.html#getPermissionsQuerySchema">getPermissionsQuerySchema</a></li><li><a href="global.html#getProfile">getProfile</a></li><li><a href="global.html#getPronounsById">getPronounsById</a></li><li><a href="global.html#getPronounsList">getPronounsList</a></li><li><a href="global.html#getPronounsQuerySchema">getPronounsQuerySchema</a></li><li><a href="global.html#getRandomCharFromPattern">getRandomCharFromPattern</a></li><li><a href="global.html#getRequestedDeviceDetails">getRequestedDeviceDetails</a></li><li><a href="global.html#getRequesterId">getRequesterId</a></li><li><a href="global.html#getRequesterPermissions">getRequesterPermissions</a></li><li><a href="global.html#getResourceByIdRetrievesasingleresourcebyitsIDfromthedatabase,applyingthespecifiedpopulatemethod.Itreturnsaformattedresponseoranerroriftheresourceisnotfound.Italsologsanyerrorthatoccursduringtheoperation.">getResourceByIdRetrieves a single resource by its ID from the database, applying the specified populate method. It returns a formatted responseor an error if the resource is not found. It also logs any error that occurs during the operation.</a></li><li><a href="global.html#getResourceListRetrievesalistofresourcesbasedonprovidedparametersandquerymapping,supportingpagination,sorting,andfiltering.Itreturnsanarrayofresourcesoranotfoundmessageifnoresourcesmatchthecriteria.">getResourceListRetrieves a list of resources based on provided parameters and query mapping, supporting pagination, sorting, and filtering.It returns an array of resources or a not found message if no resources match the criteria.</a></li><li><a href="global.html#getRoleById">getRoleById</a></li><li><a href="global.html#getRoleList">getRoleList</a></li><li><a href="global.html#getRolesQuerySchema">getRolesQuerySchema</a></li><li><a href="global.html#getSecurityLog">getSecurityLog</a></li><li><a href="global.html#githubSchema">githubSchema</a></li><li><a href="global.html#googleDriveConfiguration">googleDriveConfiguration</a></li><li><a href="global.html#handleServerError">handleServerError</a></li><li><a href="global.html#handleUncaughtException">handleUncaughtException</a></li><li><a href="global.html#handleUnhandledRejection">handleUnhandledRejection</a></li><li><a href="global.html#homeService">homeService</a></li><li><a href="global.html#hppConfiguration">hppConfiguration</a></li><li><a href="global.html#imageSchema">imageSchema</a></li><li><a href="global.html#imageSize">imageSize</a></li><li><a href="global.html#initiateGracefulShutdown">initiateGracefulShutdown</a></li><li><a href="global.html#invalidate">invalidate</a></li><li><a href="global.html#isActiveSchema">isActiveSchema</a></li><li><a href="global.html#isEmailVerifiedSchema">isEmailVerifiedSchema</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#isEmptyObject">isEmptyObject</a></li><li><a href="global.html#isMobileVerifiedSchema">isMobileVerifiedSchema</a></li><li><a href="global.html#isPrimaryEmailSchema">isPrimaryEmailSchema</a></li><li><a href="global.html#isPrimaryMobileSchema">isPrimaryMobileSchema</a></li><li><a href="global.html#lengths">lengths</a></li><li><a href="global.html#linkedInSchema">linkedInSchema</a></li><li><a href="global.html#loadListFromFile">loadListFromFile</a></li><li><a href="global.html#loggerService">loggerService</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginManagesuserloginrequestsbyvalidatingcredentialsandgeneratingsessioninformation.Recordsdeviceandhostdataforsecurityandauditing.">loginManages user login requests by validating credentials and generating session information. Records device and host data for security and auditing.</a></li><li><a href="global.html#loginSchema">loginSchema</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#logoutHandlesuserlogoutrequests,ensuringthatsessiondataisclearedandloggingoutisdonesecurely.">logoutHandles user logout requests, ensuring that session data is cleared and logging out is done securely.</a></li><li><a href="global.html#mobileField">mobileField</a></li><li><a href="global.html#mobileSchema">mobileSchema</a></li><li><a href="global.html#mobileVerifyTokenExpiresSchema">mobileVerifyTokenExpiresSchema</a></li><li><a href="global.html#mobileVerifyTokenSchema">mobileVerifyTokenSchema</a></li><li><a href="global.html#morganConfiguration">morganConfiguration</a></li><li><a href="global.html#mustChangePasswordSchema">mustChangePasswordSchema</a></li><li><a href="global.html#nameSchema">nameSchema</a></li><li><a href="global.html#numericIdSchema">numericIdSchema</a></li><li><a href="global.html#objectIdField">objectIdField</a></li><li><a href="global.html#objectIdValidator">objectIdValidator</a></li><li><a href="global.html#objectIdsField">objectIdsField</a></li><li><a href="global.html#passwordField">passwordField</a></li><li><a href="global.html#passwordHashSchema">passwordHashSchema</a></li><li><a href="global.html#pattern">pattern</a></li><li><a href="global.html#permissionIdParamSchema">permissionIdParamSchema</a></li><li><a href="global.html#permissionIdsParamSchema">permissionIdsParamSchema</a></li><li><a href="global.html#permissionSchema">permissionSchema</a></li><li><a href="global.html#permissionSchemaBase">permissionSchemaBase</a></li><li><a href="global.html#permissionsSchema">permissionsSchema</a></li><li><a href="global.html#permissionsService">permissionsService</a></li><li><a href="global.html#permissionsValidator">permissionsValidator</a></li><li><a href="global.html#populatePermissionFields">populatePermissionFields</a></li><li><a href="global.html#populatePronounsFields">populatePronounsFields</a></li><li><a href="global.html#populateRoleFields">populateRoleFields</a></li><li><a href="global.html#preSaveHook">preSaveHook</a></li><li><a href="global.html#prepareEmailContent">prepareEmailContent</a></li><li><a href="global.html#privacySettings">privacySettings</a></li><li><a href="global.html#privacySettingsRules">privacySettingsRules</a></li><li><a href="global.html#profileVisibilitySchema">profileVisibilitySchema</a></li><li><a href="global.html#pronounsConstants">pronounsConstants</a></li><li><a href="global.html#pronounsController">pronounsController</a></li><li><a href="global.html#pronounsIdParamSchema">pronounsIdParamSchema</a></li><li><a href="global.html#pronounsIdsParamSchema">pronounsIdsParamSchema</a></li><li><a href="global.html#pronounsSchema">pronounsSchema</a></li><li><a href="global.html#pronounsSchemaBase">pronounsSchemaBase</a></li><li><a href="global.html#pronounsService">pronounsService</a></li><li><a href="global.html#pronounsValidator">pronounsValidator</a></li><li><a href="global.html#requestNewAdminPassword">requestNewAdminPassword</a></li><li><a href="global.html#requestNewPassword">requestNewPassword</a></li><li><a href="global.html#requestNewPasswordProvidesfunctionalityforuserstorequestapasswordreset.Thisfunctionextractsnecessaryinformationfromtherequestandpassesittotheservicelayer.">requestNewPasswordProvides functionality for users to request a password reset. This function extracts necessary information from the request and passes it to the service layer.</a></li><li><a href="global.html#resendAdminVerification">resendAdminVerification</a></li><li><a href="global.html#resendVerification">resendVerification</a></li><li><a href="global.html#resendVerificationAllowsuserstorequestanotherverificationemailifthefirstwasnotreceivedorexpired.">resendVerificationAllows users to request another verification email if the first was not received or expired.</a></li><li><a href="global.html#resetAdminPassword">resetAdminPassword</a></li><li><a href="global.html#resetPassword">resetPassword</a></li><li><a href="global.html#resetPasswordHandlesuserrequeststoresettheirpasswordusingatokenprovidedthroughapreviouspasswordresetrequest.">resetPasswordHandles user requests to reset their password using a token provided through a previous password reset request.</a></li><li><a href="global.html#resetPasswordVerifyTokenExpiresSchema">resetPasswordVerifyTokenExpiresSchema</a></li><li><a href="global.html#resetPasswordVerifyTokenSchema">resetPasswordVerifyTokenSchema</a></li><li><a href="global.html#roleIdParamSchema">roleIdParamSchema</a></li><li><a href="global.html#roleIdsParamSchema">roleIdsParamSchema</a></li><li><a href="global.html#roleSchema">roleSchema</a></li><li><a href="global.html#roleSchemaBase">roleSchemaBase</a></li><li><a href="global.html#rolesConstants">rolesConstants</a></li><li><a href="global.html#rolesController">rolesController</a></li><li><a href="global.html#rolesSchema">rolesSchema</a></li><li><a href="global.html#rolesService">rolesService</a></li><li><a href="global.html#rolesValidator">rolesValidator</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#sanitize">sanitize</a></li><li><a href="global.html#sanitizeRequestConfiguration">sanitizeRequestConfiguration</a></li><li><a href="global.html#sendEmail">sendEmail</a></li><li><a href="global.html#sendResponse">sendResponse</a></li><li><a href="global.html#sessionsSchema">sessionsSchema</a></li><li><a href="global.html#shutdownHandler">shutdownHandler</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#signupHandlesusersignuprequests.Extractshostdatafromtherequestandcallstheprovidedservicefunction.">signupHandles user signup requests. Extracts host data from the request and calls the provided service function.</a></li><li><a href="global.html#statusController">statusController</a></li><li><a href="global.html#statusService">statusService</a></li><li><a href="global.html#testUncaughtExceptionController">testUncaughtExceptionController</a></li><li><a href="global.html#toSentenceCase">toSentenceCase</a></li><li><a href="global.html#twitterSchema">twitterSchema</a></li><li><a href="global.html#twoFactorEnabledSchema">twoFactorEnabledSchema</a></li><li><a href="global.html#twoFactorSecretSchema">twoFactorSecretSchema</a></li><li><a href="global.html#undefinedController">undefinedController</a></li><li><a href="global.html#undefinedService">undefinedService</a></li><li><a href="global.html#updateAppearance">updateAppearance</a></li><li><a href="global.html#updateByIdUpdatesaspecificresourcebasedonitsIDprovidedintherequestparameters,handlingcomplexupdatesincludingfileuploads.">updateByIdUpdates a specific resource based on its ID provided in the request parameters, handling complex updates including file uploads.</a></li><li><a href="global.html#updateByRequesterUpdatesdataspecifictotherequester,supportingupdatesthatincludefileuploads.">updateByRequesterUpdates data specific to the requester, supporting updates that include file uploads.</a></li><li><a href="global.html#updatePermissionById">updatePermissionById</a></li><li><a href="global.html#updatePermissionSchema">updatePermissionSchema</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#updatePronounsById">updatePronounsById</a></li><li><a href="global.html#updatePronounsSchema">updatePronounsSchema</a></li><li><a href="global.html#updateRoleById">updateRoleById</a></li><li><a href="global.html#updateRoleSchema">updateRoleSchema</a></li><li><a href="global.html#updateUserProfile">updateUserProfile</a></li><li><a href="global.html#updatedByAdminSchema">updatedByAdminSchema</a></li><li><a href="global.html#uploadFile">uploadFile</a></li><li><a href="global.html#urlSchema">urlSchema</a></li><li><a href="global.html#userIdSchema">userIdSchema</a></li><li><a href="global.html#userProfileController">userProfileController</a></li><li><a href="global.html#userSchema">userSchema</a></li><li><a href="global.html#userSchemaBase">userSchemaBase</a></li><li><a href="global.html#usernameSchema">usernameSchema</a></li><li><a href="global.html#usersSchema">usersSchema</a></li><li><a href="global.html#validateAdminRequest">validateAdminRequest</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateEmails">validateEmails</a></li><li><a href="global.html#validateFile">validateFile</a></li><li><a href="global.html#validatePassword">validatePassword</a></li><li><a href="global.html#validatePermission">validatePermission</a></li><li><a href="global.html#validatePermissionsChecksifallthespecifiedpermissionIDsexistinthedatabase.Thisfunctionisessentialforvalidatingpermissionsaspartofaccesscontrolmechanisms.ItretrievespermissiondocumentsfromthedatabasebasedontheprovidedIDsandcomparesthecountoffoundpermissionswiththecountofrequestedIDs.">validatePermissionsChecks if all the specified permission IDs exist in the database. This function is essential for validating permissions as part of access control mechanisms.It retrieves permission documents from the database based on the provided IDs and compares the count of found permissions with the count of requested IDs.</a></li><li><a href="global.html#validateUserRequest">validateUserRequest</a></li><li><a href="global.html#validateWithSchemaAmiddlewaregeneratorfunctionthatcreatesamiddlewaretovalidatespecifiedpropertiesoftherequestobjectagainstprovidedJoischemas.ItappliescustomvalidationmessagesandallowsconfigurationofJoivalidationoptions.Ifvalidationfails,itsendsaformattederrorresponse;otherwise,itsanitizesthedatabytypeconversionandproceedstothenextmiddleware.">validateWithSchemaA middleware generator function that creates a middleware to validate specified properties of the request object against provided Joi schemas.It applies custom validation messages and allows configuration of Joi validation options. If validation fails, it sends a formatted error response; otherwise, it sanitizes the data by type conversion and proceeds to the next middleware.</a></li><li><a href="global.html#verify">verify</a></li><li><a href="global.html#verifyProcessesuseremailverificationusingatokenprovidedintherequestparameters.Itretrieveshostdataforlogging.">verifyProcesses user email verification using a token provided in the request parameters. It retrieves host data for logging.</a></li><li><a href="global.html#verifyAdmin">verifyAdmin</a></li><li><a href="global.html#verifyAuthenticationToken">verifyAuthenticationToken</a></li><li><a href="global.html#verifyJwtToken">verifyJwtToken</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Aug 09 2024 18:43:57 GMT+0600 (Bangladesh Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

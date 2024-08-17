@@ -1,0 +1,1778 @@
+{
+  "info": {
+    "_postman_id": "27e84ab6-25aa-4ada-ade0-1e12e59211c2",
+    "name": "node-express-boilerplate",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12432462",
+    "_collection_link": "https://bold-shadow-700506.postman.co/workspace/restoman~f98ef84e-46bf-4b30-b5a3-0a563f495445/collection/12432462-27e84ab6-25aa-4ada-ade0-1e12e59211c2?action=share&source=collection_link&creator=12432462"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "admin",
+          "item": [
+            {
+              "name": "create admin",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Montasim\",\r\n    \"email\": \"montasimmamun@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/admin",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "admin"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "verify admin",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Tahmid\",\r\n    \"email\": \"tahmidshabab@gmail.com\",\r\n    \"password\": \"Qweqwe@1234\",\r\n    \"confirmPassword\": \"Qweqwe@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/admin/verify/63c31eca4f7b77a4cfe58edfb8d45a777623639ba42fbbb0e4912397974de834",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "admin",
+                    "verify",
+                    "63c31eca4f7b77a4cfe58edfb8d45a777623639ba42fbbb0e4912397974de834"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "resend verification email",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Tahmid\",\r\n    \"email\": \"tahmidshabab@gmail.com\",\r\n    \"password\": \"Qweqwe@1234\",\r\n    \"confirmPassword\": \"Qweqwe@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/admin/resend-verification/668d0d3730f505b0f3f935d4",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "admin",
+                    "resend-verification",
+                    "668d0d3730f505b0f3f935d4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "request new password",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"montasimmamun@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/admin/request-new-password",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "admin",
+                    "request-new-password"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reset password",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"oldPassword\": \"0a!0!!0A0\",\r\n    \"newPassword\": \"Qweqwe@12345\",\r\n    \"confirmNewPassword\": \"Qweqwe@12345\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/admin/reset-password/a91501bb4b6ad3497798b91883eaa1ed59c4a9d5",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "admin",
+                    "reset-password",
+                    "a91501bb4b6ad3497798b91883eaa1ed59c4a9d5"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"montasimmamun@gmail.com\",\r\n    \"password\": \"Qweqwe@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/admin/login",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "admin", "login"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "logout",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/admin/logout",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "admin", "logout"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "auth",
+          "item": [
+            {
+              "name": "signup",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Montasim\",\r\n    \"dateOfBirth\": \"16-12-1998\",\r\n    \"email\": \"montasimmamun@gmail.com\",\r\n    \"password\": \"Qweqwe@1234\",\r\n    \"confirmPassword\": \"Qweqwe@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/auth/signup",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "auth", "signup"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "verify user",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Tahmid\",\r\n    \"email\": \"tahmidshabab@gmail.com\",\r\n    \"password\": \"Qweqwe@1234\",\r\n    \"confirmPassword\": \"Qweqwe@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/auth/verify/56548520fb09197a116dd5897619b6f755969dee",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "auth",
+                    "verify",
+                    "56548520fb09197a116dd5897619b6f755969dee"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "resend verification email",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Tahmid\",\r\n    \"email\": \"tahmidshabab@gmail.com\",\r\n    \"password\": \"Qweqwe@1234\",\r\n    \"confirmPassword\": \"Qweqwe@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/auth/resend-verification/66a4fd2b8e007a512af012f9",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "auth",
+                    "resend-verification",
+                    "66a4fd2b8e007a512af012f9"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "request new password",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"montasimmamun@gmail.com\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/auth/request-new-password",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "auth", "request-new-password"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reset password",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"oldPassword\": \"Qweqwe@1234\",\r\n    \"newPassword\": \"Qweqwe@12345\",\r\n    \"confirmNewPassword\": \"Qweqwe@12345\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/auth/reset-password/2acca903983448744410606e70babe76174d8fb2",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "auth",
+                    "reset-password",
+                    "2acca903983448744410606e70babe76174d8fb2"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"montasimmamun@gmail.com\",\r\n    \"password\": \"Qweqwe@1234\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/auth/login",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "auth", "login"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "logout",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"tahmidshabab@gmail.com\",\r\n    \"password\": \"Qweqwe@12345\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/auth/logout",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "auth", "logout"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "detect",
+          "item": [
+            {
+              "name": "details",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/detect?browser=true&browserVersion=true&ip=true&language=true&os=true&timeZone=true&referrer=true&cookies=true&geo=true",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "detect"],
+                  "query": [
+                    {
+                      "key": "browser",
+                      "value": "true"
+                    },
+                    {
+                      "key": "browserVersion",
+                      "value": "true"
+                    },
+                    {
+                      "key": "ip",
+                      "value": "true"
+                    },
+                    {
+                      "key": "language",
+                      "value": "true"
+                    },
+                    {
+                      "key": "os",
+                      "value": "true"
+                    },
+                    {
+                      "key": "timeZone",
+                      "value": "true"
+                    },
+                    {
+                      "key": "referrer",
+                      "value": "true"
+                    },
+                    {
+                      "key": "cookies",
+                      "value": "true"
+                    },
+                    {
+                      "key": "geo",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "logs",
+          "item": [
+            {
+              "name": "get logs",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{JWT_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{DEVELOPMENT_URL}}/api/{{VERSION}}/logs",
+                  "host": ["{{DEVELOPMENT_URL}}"],
+                  "path": ["api", "{{VERSION}}", "logs"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "permissions",
+          "item": [
+            {
+              "name": "create permission",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"create-permission\",\r\n  \"isActive\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "permissions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create default permisions",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions/default",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "permissions", "default"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all permissions",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "permissions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get permissions by query",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions?name=delete-book-by-id",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "permissions"],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "delete-book-by-id"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "name",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": true
+                    },
+                    {
+                      "key": "createdAt",
+                      "value": "2024-07-08T11:52:16.973Z",
+                      "disabled": true
+                    },
+                    {
+                      "key": "updatedAt",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "updatedBy",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get permission by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions/66a7e726ff5694253fe2e979",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "permissions",
+                    "66a7e726ff5694253fe2e979"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update permission by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    // \"name\": \"modify-writers\",\r\n    \"isActive\": false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions/66a7e726ff5694253fe2e979",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "permissions",
+                    "66a7e726ff5694253fe2e979"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete permissions by list",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions?ids=66a9e328a57d8b4f5d9a0c69",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "permissions"],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "66a9e328a57d8b4f5d9a0c69"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete permission",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions/66a7db2204a411517089ff75",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "permissions",
+                    "66a7db2204a411517089ff75"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "patch subject",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "permissions"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "pronouns",
+          "item": [
+            {
+              "name": "create pronouns",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Rather not say\",\r\n  \"isActive\": true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/pronouns",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "pronouns"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all pronouns",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/pronouns",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "pronouns"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get pronouns by query",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/pronouns?name=Rather not say",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "pronouns"],
+                  "query": [
+                    {
+                      "key": "name",
+                      "value": "Rather not say"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "name",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1",
+                      "disabled": true
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100",
+                      "disabled": true
+                    },
+                    {
+                      "key": "createdAt",
+                      "value": "2024-07-08T11:52:16.973Z",
+                      "disabled": true
+                    },
+                    {
+                      "key": "updatedAt",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "createdBy",
+                      "value": "",
+                      "disabled": true
+                    },
+                    {
+                      "key": "updatedBy",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get pronouns by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/pronouns/66aa5d780b2f8043ab10fdb7",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "pronouns",
+                    "66aa5d780b2f8043ab10fdb7"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update pronouns",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Female\",\r\n    \"isActive\": false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/pronouns/66aa59bc26888e8777b7aca4",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "pronouns",
+                    "66aa59bc26888e8777b7aca4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete pronouns",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/pronouns?ids=66aa59bc26888e8777b7aca4",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "pronouns"],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "66aa59bc26888e8777b7aca4"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete pronouns",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/pronouns/66aa59bc26888e8777b7aca4",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "pronouns",
+                    "66aa59bc26888e8777b7aca4"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "patch pronouns",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/permissions",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "permissions"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "roles",
+          "item": [
+            {
+              "name": "create role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Test role\",\r\n  \"permissions\": [\r\n    \"66a9e328a57d8b4f5d9a0c60\"\r\n  ],\r\n  \"isActive\": false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "roles"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create default role",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles/default",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "roles", "default"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get all roles",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "roles"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get roles by query",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles?page=1&limit=100",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "roles"],
+                  "query": [
+                    {
+                      "key": "permission[0]",
+                      "value": "6684c51f4b73e9aaded3f3aa",
+                      "disabled": true
+                    },
+                    {
+                      "key": "sort",
+                      "value": "name",
+                      "disabled": true
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true",
+                      "disabled": true
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get role by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles/66a9e356aa31f97eadfbdee6",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "roles",
+                    "66a9e356aa31f97eadfbdee6"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update role by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"isActive\": false\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles/66aa4eb7d48af3cfa941933c",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "roles",
+                    "66aa4eb7d48af3cfa941933c"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete role by list",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles?ids=66a8edbf623fb82ca05f7885",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "roles"],
+                  "query": [
+                    {
+                      "key": "ids",
+                      "value": "66a8edbf623fb82ca05f7885"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete role by ID",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles/66aa4eb7d48af3cfa941933c",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": [
+                    "api",
+                    "{{VERSION}}",
+                    "roles",
+                    "66aa4eb7d48af3cfa941933c"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "patch subject",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{ADMIN_TOKEN}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/roles",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "roles"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "users",
+          "item": [
+            {
+              "name": "settings",
+              "item": [
+                {
+                  "name": "account",
+                  "item": [
+                    {
+                      "name": "delete account",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\r\n    \"confirmationText\": \"Delete my account\"\r\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/account",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "account"
+                          ]
+                        }
+                      },
+                      "response": []
+                    }
+                  ]
+                },
+                {
+                  "name": "appearance",
+                  "item": [
+                    {
+                      "name": "get appearance",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/appearance",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "appearance"
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "update appearance",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\r\n    \"theme\": {\r\n        \"name\": \"Light\"\r\n    }\r\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/appearance",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "appearance"
+                          ]
+                        }
+                      },
+                      "response": []
+                    }
+                  ]
+                },
+                {
+                  "name": "log",
+                  "item": [
+                    {
+                      "name": "account log",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/log/account",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "log",
+                            "account"
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "activity log",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/log/activity",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "log",
+                            "activity"
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "security log",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/log/security",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "log",
+                            "security"
+                          ]
+                        }
+                      },
+                      "response": []
+                    }
+                  ]
+                },
+                {
+                  "name": "profile",
+                  "item": [
+                    {
+                      "name": "view profile",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/profile",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "profile"
+                          ]
+                        }
+                      },
+                      "response": []
+                    },
+                    {
+                      "name": "update profile",
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{JWT_TOKEN}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "PUT",
+                        "header": [],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "key": "name.first",
+                              "value": "Montasim",
+                              "type": "text",
+                              "disabled": true
+                            },
+                            {
+                              "key": "image",
+                              "type": "file",
+                              "src": "/E:/OTHERS/DOWNLOADS/WALLPAPERS/windows-11-dark-3840x2400-11771.png",
+                              "disabled": true
+                            },
+                            {
+                              "key": "mobile",
+                              "value": "01722815469",
+                              "type": "text",
+                              "disabled": true
+                            },
+                            {
+                              "key": "address",
+                              "value": "Dhaka, Bangladesh",
+                              "type": "text",
+                              "disabled": true
+                            },
+                            {
+                              "key": "department",
+                              "value": "IT",
+                              "type": "text",
+                              "disabled": true
+                            },
+                            {
+                              "key": "designation",
+                              "value": "Software Engineer",
+                              "type": "text",
+                              "disabled": true
+                            },
+                            {
+                              "key": "username",
+                              "value": "montasim",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{SERVER_URL}}/api/{{VERSION}}/user/settings/profile",
+                          "host": ["{{SERVER_URL}}"],
+                          "path": [
+                            "api",
+                            "{{VERSION}}",
+                            "user",
+                            "settings",
+                            "profile"
+                          ]
+                        }
+                      },
+                      "response": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "user public profile",
+          "item": [
+            {
+              "name": "profile",
+              "request": {
+                "auth": {
+                  "type": "noauth"
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{SERVER_URL}}/api/{{VERSION}}/montasim",
+                  "host": ["{{SERVER_URL}}"],
+                  "path": ["api", "{{VERSION}}", "montasim"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "status",
+      "item": [
+        {
+          "name": "get status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{SERVER_URL}}/status",
+              "host": ["{{SERVER_URL}}"],
+              "path": ["status"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "undefined",
+      "item": [
+        {
+          "name": "get undefinded",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{SERVER_URL}}/undefined",
+              "host": ["{{SERVER_URL}}"],
+              "path": ["undefined"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "home",
+      "item": [
+        {
+          "name": "get home",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{SERVER_URL}}/",
+              "host": ["{{SERVER_URL}}"],
+              "path": [""]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "test uncaught exception",
+      "item": [
+        {
+          "name": "test uncaught exception",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{SERVER_URL}}/test-uncaught-exception",
+              "host": ["{{SERVER_URL}}"],
+              "path": ["test-uncaught-exception"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

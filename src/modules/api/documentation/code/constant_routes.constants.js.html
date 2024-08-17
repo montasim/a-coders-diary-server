@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: constant/routes.constants.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: constant/routes.constants.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @fileoverview This module defines and exports a structured collection of constants for routing and permissions
+ * management in the application. It encapsulates route names and permission keys for various features within the system,
+ * such as managing books, users, authentication, and more. This structured approach ensures that route and permission
+ * identifiers are centralized, promoting consistency and reusability across the application.
+ *
+ * Each major feature or resource in the application has its own section within this constants object, detailing the base
+ * route and any specific permissions related to actions that can be performed on that resource. This method simplifies
+ * the maintenance of route and permission names, making it easier to update or reference them throughout the application's
+ * authorization and routing logic.
+ */
+
+/**
+ * Provides a comprehensive dictionary of route names and associated permissions for the application, facilitating a
+ * standardized approach to defining and accessing these values. This setup not only aids in route management but also
+ * integrates closely with the application's access control mechanisms, ensuring that permissions are correctly
+ * associated with their respective routes and actions.
+ *
+ * @module routesConstants
+ * @description Centralizes route names and permissions for easy and consistent access across the application.
+ */
+
+const routesConstants = {
+    admin: {
+        routes: 'admin',
+        permissions: {
+            create: 'create-admin',
+        },
+    },
+    auth: {
+        routes: 'auth',
+    },
+    detect: {
+        routes: 'detect',
+    },
+    trending: {
+        routes: 'trending',
+    },
+    user: {
+        routes: 'user',
+    },
+    books: {
+        routes: 'books',
+        params: 'bookId',
+        permissions: {
+            create: 'create-book',
+            getList: 'get-book-list',
+            getById: 'get-book-by-id',
+            updateById: 'update-book-by-id',
+            deleteById: 'delete-book-by-id',
+            deleteByList: 'delete-book-by-list',
+        },
+    },
+    favouriteBooks: {
+        routes: 'favourite',
+        params: 'favouriteBookId',
+    },
+    desiredBooks: {
+        routes: 'desired',
+    },
+    trendingBooks: {
+        routes: 'books',
+    },
+    booksHistory: {
+        routes: 'history',
+        params: 'bookId',
+    },
+    lendBooks: {
+        routes: 'lend',
+        permissions: {
+            create: 'create-lend',
+            getList: 'get-favourite',
+        },
+    },
+    requestBooks: {
+        routes: 'request',
+        params: 'requestedBookId',
+        permissions: {
+            create: 'create-request',
+        },
+    },
+    returnBooks: {
+        routes: 'return',
+        params: 'favouriteBookId',
+        permissions: {
+            create: 'create-return',
+        },
+    },
+    permissions: {
+        routes: 'permissions',
+        params: 'permissionId',
+        permissions: {
+            create: 'create-permission',
+            getList: 'get-permission-list',
+            getById: 'get-permission-by-id',
+            updateById: 'update-permission-by-id',
+            deleteById: 'delete-permission-by-id',
+            deleteByList: 'delete-permission-by-list',
+            createDefault: 'create-default-permission',
+        },
+    },
+    pronouns: {
+        routes: 'pronouns',
+        params: 'pronounsId',
+        permissions: {
+            create: 'create-pronouns',
+            getList: 'get-pronouns-list',
+            getById: 'get-pronouns-by-id',
+            updateById: 'update-pronouns-by-id',
+            deleteById: 'delete-pronouns-by-id',
+            deleteByList: 'delete-pronouns-by-list',
+        },
+    },
+    publications: {
+        routes: 'publications',
+        params: 'publicationId',
+        permissions: {
+            create: 'create-publication',
+            getList: 'get-publication-list',
+            getById: 'get-publication-by-id',
+            updateById: 'update-publication-by-id',
+            deleteById: 'delete-publication-by-id',
+            deleteByList: 'delete-publication-by-list',
+        },
+    },
+    roles: {
+        routes: 'roles',
+        params: 'roleId',
+        permissions: {
+            create: 'create-role',
+            getList: 'get-role-list',
+            getById: 'get-role-by-id',
+            updateById: 'update-role-by-id',
+            deleteById: 'delete-role-by-id',
+            deleteByList: 'delete-role-by-list',
+            createDefault: 'create-default-role',
+        },
+    },
+    subjects: {
+        routes: 'subjects',
+        params: 'subjectId',
+        permissions: {
+            create: 'create-subject',
+            getList: 'get-subject-list',
+            getById: 'get-subject-by-id',
+            updateById: 'update-subject-by-id',
+            deleteById: 'delete-subject-by-id',
+            deleteByList: 'delete-subject-by-list',
+        },
+    },
+    writers: {
+        routes: 'writers',
+        params: 'writerId',
+        permissions: {
+            create: 'create-writer',
+            getList: 'get-writer-list',
+            getById: 'get-writer-by-id',
+            updateById: 'update-writer-by-id',
+            deleteById: 'delete-writer-by-id',
+            deleteByList: 'delete-writer-by-list',
+        },
+    },
+};
+
+export default routesConstants;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-accessTypesConstants.html">accessTypesConstants</a></li><li><a href="module-asyncErrorHandlerService.html">asyncErrorHandlerService</a></li><li><a href="module-constants.html">constants</a></li><li><a href="module-corsConfiguration.html">corsConfiguration</a></li><li><a href="module-defaultConstants.html">defaultConstants</a></li><li><a href="module-environment.html">environment</a></li><li><a href="module-errorHandlingService.html">errorHandlingService</a></li><li><a href="module-helmetConfiguration.html">helmetConfiguration</a></li><li><a href="module-routesConstants.html">routesConstants</a></li><li><a href="module-uploadMiddleware.html">uploadMiddleware</a></li><li><a href="module-userProfileService.html">userProfileService</a></li></ul><h3>Global</h3><ul><li><a href="global.html#ACCEPTED">ACCEPTED</a></li><li><a href="global.html#ALREADY_REPORTED">ALREADY_REPORTED</a></li><li><a href="global.html#BAD_GATEWAY">BAD_GATEWAY</a></li><li><a href="global.html#BAD_REQUEST">BAD_REQUEST</a></li><li><a href="global.html#BMP">BMP</a></li><li><a href="global.html#CONFLICT">CONFLICT</a></li><li><a href="global.html#CONTINUE">CONTINUE</a></li><li><a href="global.html#CREATED">CREATED</a></li><li><a href="global.html#CSS">CSS</a></li><li><a href="global.html#CSV">CSV</a></li><li><a href="global.html#DIGITS">DIGITS</a></li><li><a href="global.html#EACCES">EACCES</a></li><li><a href="global.html#EADDRINUSE">EADDRINUSE</a></li><li><a href="global.html#EAGAIN">EAGAIN</a></li><li><a href="global.html#EARLY_HINTS">EARLY_HINTS</a></li><li><a href="global.html#ECONNREFUSED">ECONNREFUSED</a></li><li><a href="global.html#ECONNRESET">ECONNRESET</a></li><li><a href="global.html#EEXIST">EEXIST</a></li><li><a href="global.html#EISDIR">EISDIR</a></li><li><a href="global.html#EMAIL">EMAIL</a></li><li><a href="global.html#EMFILE">EMFILE</a></li><li><a href="global.html#ENOENT">ENOENT</a></li><li><a href="global.html#ENOTDIR">ENOTDIR</a></li><li><a href="global.html#ENOTFOUND">ENOTFOUND</a></li><li><a href="global.html#EPERM">EPERM</a></li><li><a href="global.html#EPIPE">EPIPE</a></li><li><a href="global.html#EPROTO">EPROTO</a></li><li><a href="global.html#ETIMEDOUT">ETIMEDOUT</a></li><li><a href="global.html#EWOULDBLOCK">EWOULDBLOCK</a></li><li><a href="global.html#EXPECTATION_FAILED">EXPECTATION_FAILED</a></li><li><a href="global.html#FACEBOOK_URL">FACEBOOK_URL</a></li><li><a href="global.html#FAILED_DEPENDENCY">FAILED_DEPENDENCY</a></li><li><a href="global.html#FORBIDDEN">FORBIDDEN</a></li><li><a href="global.html#FOUND">FOUND</a></li><li><a href="global.html#GATEWAY_TIMEOUT">GATEWAY_TIMEOUT</a></li><li><a href="global.html#GIF">GIF</a></li><li><a href="global.html#GITHUB_URL">GITHUB_URL</a></li><li><a href="global.html#GONE">GONE</a></li><li><a href="global.html#HTML">HTML</a></li><li><a href="global.html#HTTP_VERSION_NOT_SUPPORTED">HTTP_VERSION_NOT_SUPPORTED</a></li><li><a href="global.html#ICO">ICO</a></li><li><a href="global.html#IM_A_TEAPOT">IM_A_TEAPOT</a></li><li><a href="global.html#IM_USED">IM_USED</a></li><li><a href="global.html#INSUFFICIENT_STORAGE">INSUFFICIENT_STORAGE</a></li><li><a href="global.html#INTERNAL_SERVER_ERROR">INTERNAL_SERVER_ERROR</a></li><li><a href="global.html#ISO_8601_DATE">ISO_8601_DATE</a></li><li><a href="global.html#JPG">JPG</a></li><li><a href="global.html#JS">JS</a></li><li><a href="global.html#JSON">JSON</a></li><li><a href="global.html#LENGTH_REQUIRED">LENGTH_REQUIRED</a></li><li><a href="global.html#LINKEDIN_URL">LINKEDIN_URL</a></li><li><a href="global.html#LOCKED">LOCKED</a></li><li><a href="global.html#LOOP_DETECTED">LOOP_DETECTED</a></li><li><a href="global.html#LOWERCASE">LOWERCASE</a></li><li><a href="global.html#MD">MD</a></li><li><a href="global.html#METHOD_NOT_ALLOWED">METHOD_NOT_ALLOWED</a></li><li><a href="global.html#MISDIRECTED_REQUEST">MISDIRECTED_REQUEST</a></li><li><a href="global.html#MOBILE">MOBILE</a></li><li><a href="global.html#MOVED_PERMANENTLY">MOVED_PERMANENTLY</a></li><li><a href="global.html#MP3">MP3</a></li><li><a href="global.html#MP4">MP4</a></li><li><a href="global.html#MULTIPLE_CHOICES">MULTIPLE_CHOICES</a></li><li><a href="global.html#MULTI_STATUS">MULTI_STATUS</a></li><li><a href="global.html#NETWORK_AUTHENTICATION_REQUIRED">NETWORK_AUTHENTICATION_REQUIRED</a></li><li><a href="global.html#NON_AUTHORITATIVE_INFORMATION">NON_AUTHORITATIVE_INFORMATION</a></li><li><a href="global.html#NOT_ACCEPTABLE">NOT_ACCEPTABLE</a></li><li><a href="global.html#NOT_EXTENDED">NOT_EXTENDED</a></li><li><a href="global.html#NOT_FOUND">NOT_FOUND</a></li><li><a href="global.html#NOT_IMPLEMENTED">NOT_IMPLEMENTED</a></li><li><a href="global.html#NOT_MODIFIED">NOT_MODIFIED</a></li><li><a href="global.html#NO_CONTENT">NO_CONTENT</a></li><li><a href="global.html#OK">OK</a></li><li><a href="global.html#PARTIAL_CONTENT">PARTIAL_CONTENT</a></li><li><a href="global.html#PASSWORD">PASSWORD</a></li><li><a href="global.html#PAYLOAD_TOO_LARGE">PAYLOAD_TOO_LARGE</a></li><li><a href="global.html#PAYMENT_REQUIRED">PAYMENT_REQUIRED</a></li><li><a href="global.html#PDF">PDF</a></li><li><a href="global.html#PERMANENT_REDIRECT">PERMANENT_REDIRECT</a></li><li><a href="global.html#PNG">PNG</a></li><li><a href="global.html#PRECONDITION_FAILED">PRECONDITION_FAILED</a></li><li><a href="global.html#PRECONDITION_REQUIRED">PRECONDITION_REQUIRED</a></li><li><a href="global.html#PROCESSING">PROCESSING</a></li><li><a href="global.html#PROFILE_VISIBILITY">PROFILE_VISIBILITY</a></li><li><a href="global.html#PROXY_AUTHENTICATION_REQUIRED">PROXY_AUTHENTICATION_REQUIRED</a></li><li><a href="global.html#RANGE_NOT_SATISFIABLE">RANGE_NOT_SATISFIABLE</a></li><li><a href="global.html#RAR">RAR</a></li><li><a href="global.html#REQUEST_HEADER_FIELDS_TOO_LARGE">REQUEST_HEADER_FIELDS_TOO_LARGE</a></li><li><a href="global.html#REQUEST_TIMEOUT">REQUEST_TIMEOUT</a></li><li><a href="global.html#RESET_CONTENT">RESET_CONTENT</a></li><li><a href="global.html#SEE_OTHER">SEE_OTHER</a></li><li><a href="global.html#SERVICE_UNAVAILABLE">SERVICE_UNAVAILABLE</a></li><li><a href="global.html#SPECIAL_CHARACTERS">SPECIAL_CHARACTERS</a></li><li><a href="global.html#SVG">SVG</a></li><li><a href="global.html#SWITCHING_PROTOCOLS">SWITCHING_PROTOCOLS</a></li><li><a href="global.html#TEMPORARY_REDIRECT">TEMPORARY_REDIRECT</a></li><li><a href="global.html#TIFF">TIFF</a></li><li><a href="global.html#TOO_EARLY">TOO_EARLY</a></li><li><a href="global.html#TOO_MANY_REQUESTS">TOO_MANY_REQUESTS</a></li><li><a href="global.html#TWITTER_URL">TWITTER_URL</a></li><li><a href="global.html#TXT">TXT</a></li><li><a href="global.html#UNAUTHORIZED">UNAUTHORIZED</a></li><li><a href="global.html#UNAVAILABLE_FOR_LEGAL_REASONS">UNAVAILABLE_FOR_LEGAL_REASONS</a></li><li><a href="global.html#UNPROCESSABLE_ENTITY">UNPROCESSABLE_ENTITY</a></li><li><a href="global.html#UNSUPPORTED_MEDIA_TYPE">UNSUPPORTED_MEDIA_TYPE</a></li><li><a href="global.html#UPGRADE_REQUIRED">UPGRADE_REQUIRED</a></li><li><a href="global.html#UPPERCASE">UPPERCASE</a></li><li><a href="global.html#URI_TOO_LONG">URI_TOO_LONG</a></li><li><a href="global.html#URL">URL</a></li><li><a href="global.html#USE_PROXY">USE_PROXY</a></li><li><a href="global.html#VARIANT_ALSO_NEGOTIATES">VARIANT_ALSO_NEGOTIATES</a></li><li><a href="global.html#WAV">WAV</a></li><li><a href="global.html#XML">XML</a></li><li><a href="global.html#ZIP">ZIP</a></li><li><a href="global.html#actionTypes">actionTypes</a></li><li><a href="global.html#activitiesSchema">activitiesSchema</a></li><li><a href="global.html#activityType">activityType</a></li><li><a href="global.html#addressSchema">addressSchema</a></li><li><a href="global.html#adminActivityLoggerSchema">adminActivityLoggerSchema</a></li><li><a href="global.html#adminLogin">adminLogin</a></li><li><a href="global.html#adminLogout">adminLogout</a></li><li><a href="global.html#adminSchema">adminSchema</a></li><li><a href="global.html#appearanceSchema">appearanceSchema</a></li><li><a href="global.html#asyncErrorHandlerService">asyncErrorHandlerService</a></li><li><a href="global.html#authenticateMiddleware">authenticateMiddleware</a></li><li><a href="global.html#bioSchema">bioSchema</a></li><li><a href="global.html#booleanField">booleanField</a></li><li><a href="global.html#companySchema">companySchema</a></li><li><a href="global.html#compressionConfiguration">compressionConfiguration</a></li><li><a href="global.html#configuration">configuration</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#createGenericcreationcontrollerthatcanhandlerequestswithorwithoutfileuploadsaspartofthedatapayload.">createGeneric creation controller that can handle requests with or without file uploads as part of the data payload.</a></li><li><a href="global.html#createAuthenticationToken">createAuthenticationToken</a></li><li><a href="global.html#createDefaultPermissionList">createDefaultPermissionList</a></li><li><a href="global.html#createDefaultRole">createDefaultRole</a></li><li><a href="global.html#createFileNameSchema">createFileNameSchema</a></li><li><a href="global.html#createHashedPassword">createHashedPassword</a></li><li><a href="global.html#createNewAdmin">createNewAdmin</a></li><li><a href="global.html#createNewUserCreatesanewuserbyinvokingtheprovidedservicefunctionwithnecessaryparametersextractedfromtherequest.Utilizeshostdataandrequesteridentificationforloggingandservicecustomization.">createNewUserCreates a new user by invoking the provided service function with necessary parameters extracted from the request.Utilizes host data and requester identification for logging and service customization.</a></li><li><a href="global.html#createPermission">createPermission</a></li><li><a href="global.html#createPermissionSchema">createPermissionSchema</a></li><li><a href="global.html#createPronouns">createPronouns</a></li><li><a href="global.html#createPronounsSchema">createPronounsSchema</a></li><li><a href="global.html#createRole">createRole</a></li><li><a href="global.html#createRoleSchema">createRoleSchema</a></li><li><a href="global.html#createStringField">createStringField</a></li><li><a href="global.html#createWithIdCreatesaresourceassociatedwithaspecificIDprovidedintherequestparameters.Thiscontrollerisusedwhenthecreationofaresourceisdependentonanexistingentity.">createWithIdCreates a resource associated with a specific ID provided in the request parameters. This controller is used when the creation of a resource is dependent on an existing entity.</a></li><li><a href="global.html#createdByAdminSchema">createdByAdminSchema</a></li><li><a href="global.html#customObjectIdValidator">customObjectIdValidator</a></li><li><a href="global.html#dateField">dateField</a></li><li><a href="global.html#dateOfBirthSchema">dateOfBirthSchema</a></li><li><a href="global.html#decodeAuthenticationToken">decodeAuthenticationToken</a></li><li><a href="global.html#deleteAccount">deleteAccount</a></li><li><a href="global.html#deleteByIdDeletesaspecificresourcebyitsID,providedintherequestparameters.Thiscontrollerensuressecureandauditabledeletionprocesses.">deleteByIdDeletes a specific resource by its ID, provided in the request parameters. This controller ensures secure and auditable deletion processes.</a></li><li><a href="global.html#deleteFile">deleteFile</a></li><li><a href="global.html#deleteListAllowsforbulkdeletionofresourcesbasedonalistofIDsprovidedintherequestquery.Thisfunctionensuresefficientandsecuredeletionofmultipleentries.">deleteListAllows for bulk deletion of resources based on a list of IDs provided in the request query. This function ensures efficient and secure deletion of multiple entries.</a></li><li><a href="global.html#deletePermissionById">deletePermissionById</a></li><li><a href="global.html#deletePermissionList">deletePermissionList</a></li><li><a href="global.html#deletePronounsById">deletePronounsById</a></li><li><a href="global.html#deletePronounsList">deletePronounsList</a></li><li><a href="global.html#deleteResourceByIdDeletesasingleresourcebyID,includinganyassociatedresourcessuchasfilesstoredinGoogleDrive.Itlogstheactionandhandleserrorsappropriately,returningasuccessorerrorresponsebasedontheoutcomeoftheoperation.">deleteResourceByIdDeletes a single resource by ID, including any associated resources such as files stored in Google Drive. It logs the action andhandles errors appropriately, returning a success or error response based on the outcome of the operation.</a></li><li><a href="global.html#deleteResourcesByListDeletesmultipleresourcesidentifiedbyanarrayofIDs,handlingeachdeletionindividuallyandmanagingassociatedresourceslikefiles.Itprovidesdetailedresultsofthedeletionprocess,includingcountsofdeleted,notfound,andfaileddeletions.">deleteResourcesByListDeletes multiple resources identified by an array of IDs, handling each deletion individually and managing associated resources like files.It provides detailed results of the deletion process, including counts of deleted, not found, and failed deletions.</a></li><li><a href="global.html#deleteRoleById">deleteRoleById</a></li><li><a href="global.html#deleteRoleByList">deleteRoleByList</a></li><li><a href="global.html#deleteUser">deleteUser</a></li><li><a href="global.html#detectController">detectController</a></li><li><a href="global.html#detectService">detectService</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#emailField">emailField</a></li><li><a href="global.html#emailSchema">emailSchema</a></li><li><a href="global.html#emailVerifyTokenExpiresSchema">emailVerifyTokenExpiresSchema</a></li><li><a href="global.html#emailVerifyTokenSchema">emailVerifyTokenSchema</a></li><li><a href="global.html#envVarsSchema">envVarsSchema</a></li><li><a href="global.html#errorResponse">errorResponse</a></li><li><a href="global.html#externalOAuthSchema">externalOAuthSchema</a></li><li><a href="global.html#facebookSchema">facebookSchema</a></li><li><a href="global.html#fileBufferValidationSchema">fileBufferValidationSchema</a></li><li><a href="global.html#fileField">fileField</a></li><li><a href="global.html#generateExtensionRegexPattern">generateExtensionRegexPattern</a></li><li><a href="global.html#generateHashedToken">generateHashedToken</a></li><li><a href="global.html#generateTempPassword">generateTempPassword</a></li><li><a href="global.html#generateVerificationToken">generateVerificationToken</a></li><li><a href="global.html#getAccountLog">getAccountLog</a></li><li><a href="global.html#getActivityLog">getActivityLog</a></li><li><a href="global.html#getAppearance">getAppearance</a></li><li><a href="global.html#getAuthenticationToken">getAuthenticationToken</a></li><li><a href="global.html#getByIdFetchesaspecificresourcebyIDprovidedintherequestparameters,utilizingrequesterdataforaccesscontrolandlogging.">getByIdFetches a specific resource by ID provided in the request parameters, utilizing requester data for access control and logging.</a></li><li><a href="global.html#getByRequesterRetrievesinformationspecifictotherequesterbasedontheiridentificationinthesystem.">getByRequesterRetrieves information specific to the requester based on their identification in the system.</a></li><li><a href="global.html#getEnvVar">getEnvVar</a></li><li><a href="global.html#getHostData">getHostData</a></li><li><a href="global.html#getInt">getInt</a></li><li><a href="global.html#getListRetrievesalistofresourcesbasedonthequeryparametersprovidedbytherequester.">getListRetrieves a list of resources based on the query parameters provided by the requester.</a></li><li><a href="global.html#getPermissionById">getPermissionById</a></li><li><a href="global.html#getPermissionList">getPermissionList</a></li><li><a href="global.html#getPermissionsQuerySchema">getPermissionsQuerySchema</a></li><li><a href="global.html#getProfile">getProfile</a></li><li><a href="global.html#getPronounsById">getPronounsById</a></li><li><a href="global.html#getPronounsList">getPronounsList</a></li><li><a href="global.html#getPronounsQuerySchema">getPronounsQuerySchema</a></li><li><a href="global.html#getRandomCharFromPattern">getRandomCharFromPattern</a></li><li><a href="global.html#getRequestedDeviceDetails">getRequestedDeviceDetails</a></li><li><a href="global.html#getRequesterId">getRequesterId</a></li><li><a href="global.html#getRequesterPermissions">getRequesterPermissions</a></li><li><a href="global.html#getResourceByIdRetrievesasingleresourcebyitsIDfromthedatabase,applyingthespecifiedpopulatemethod.Itreturnsaformattedresponseoranerroriftheresourceisnotfound.Italsologsanyerrorthatoccursduringtheoperation.">getResourceByIdRetrieves a single resource by its ID from the database, applying the specified populate method. It returns a formatted responseor an error if the resource is not found. It also logs any error that occurs during the operation.</a></li><li><a href="global.html#getResourceListRetrievesalistofresourcesbasedonprovidedparametersandquerymapping,supportingpagination,sorting,andfiltering.Itreturnsanarrayofresourcesoranotfoundmessageifnoresourcesmatchthecriteria.">getResourceListRetrieves a list of resources based on provided parameters and query mapping, supporting pagination, sorting, and filtering.It returns an array of resources or a not found message if no resources match the criteria.</a></li><li><a href="global.html#getRoleById">getRoleById</a></li><li><a href="global.html#getRoleList">getRoleList</a></li><li><a href="global.html#getRolesQuerySchema">getRolesQuerySchema</a></li><li><a href="global.html#getSecurityLog">getSecurityLog</a></li><li><a href="global.html#githubSchema">githubSchema</a></li><li><a href="global.html#googleDriveConfiguration">googleDriveConfiguration</a></li><li><a href="global.html#handleServerError">handleServerError</a></li><li><a href="global.html#handleUncaughtException">handleUncaughtException</a></li><li><a href="global.html#handleUnhandledRejection">handleUnhandledRejection</a></li><li><a href="global.html#homeService">homeService</a></li><li><a href="global.html#hppConfiguration">hppConfiguration</a></li><li><a href="global.html#imageSchema">imageSchema</a></li><li><a href="global.html#imageSize">imageSize</a></li><li><a href="global.html#initiateGracefulShutdown">initiateGracefulShutdown</a></li><li><a href="global.html#invalidate">invalidate</a></li><li><a href="global.html#isActiveSchema">isActiveSchema</a></li><li><a href="global.html#isEmailVerifiedSchema">isEmailVerifiedSchema</a></li><li><a href="global.html#isEmpty">isEmpty</a></li><li><a href="global.html#isEmptyObject">isEmptyObject</a></li><li><a href="global.html#isMobileVerifiedSchema">isMobileVerifiedSchema</a></li><li><a href="global.html#isPrimaryEmailSchema">isPrimaryEmailSchema</a></li><li><a href="global.html#isPrimaryMobileSchema">isPrimaryMobileSchema</a></li><li><a href="global.html#lengths">lengths</a></li><li><a href="global.html#linkedInSchema">linkedInSchema</a></li><li><a href="global.html#loadListFromFile">loadListFromFile</a></li><li><a href="global.html#loggerService">loggerService</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#loginManagesuserloginrequestsbyvalidatingcredentialsandgeneratingsessioninformation.Recordsdeviceandhostdataforsecurityandauditing.">loginManages user login requests by validating credentials and generating session information. Records device and host data for security and auditing.</a></li><li><a href="global.html#loginSchema">loginSchema</a></li><li><a href="global.html#logout">logout</a></li><li><a href="global.html#logoutHandlesuserlogoutrequests,ensuringthatsessiondataisclearedandloggingoutisdonesecurely.">logoutHandles user logout requests, ensuring that session data is cleared and logging out is done securely.</a></li><li><a href="global.html#mobileField">mobileField</a></li><li><a href="global.html#mobileSchema">mobileSchema</a></li><li><a href="global.html#mobileVerifyTokenExpiresSchema">mobileVerifyTokenExpiresSchema</a></li><li><a href="global.html#mobileVerifyTokenSchema">mobileVerifyTokenSchema</a></li><li><a href="global.html#morganConfiguration">morganConfiguration</a></li><li><a href="global.html#mustChangePasswordSchema">mustChangePasswordSchema</a></li><li><a href="global.html#nameSchema">nameSchema</a></li><li><a href="global.html#numericIdSchema">numericIdSchema</a></li><li><a href="global.html#objectIdField">objectIdField</a></li><li><a href="global.html#objectIdValidator">objectIdValidator</a></li><li><a href="global.html#objectIdsField">objectIdsField</a></li><li><a href="global.html#passwordField">passwordField</a></li><li><a href="global.html#passwordHashSchema">passwordHashSchema</a></li><li><a href="global.html#pattern">pattern</a></li><li><a href="global.html#permissionIdParamSchema">permissionIdParamSchema</a></li><li><a href="global.html#permissionIdsParamSchema">permissionIdsParamSchema</a></li><li><a href="global.html#permissionSchema">permissionSchema</a></li><li><a href="global.html#permissionSchemaBase">permissionSchemaBase</a></li><li><a href="global.html#permissionsSchema">permissionsSchema</a></li><li><a href="global.html#permissionsService">permissionsService</a></li><li><a href="global.html#permissionsValidator">permissionsValidator</a></li><li><a href="global.html#populatePermissionFields">populatePermissionFields</a></li><li><a href="global.html#populatePronounsFields">populatePronounsFields</a></li><li><a href="global.html#populateRoleFields">populateRoleFields</a></li><li><a href="global.html#preSaveHook">preSaveHook</a></li><li><a href="global.html#prepareEmailContent">prepareEmailContent</a></li><li><a href="global.html#privacySettings">privacySettings</a></li><li><a href="global.html#privacySettingsRules">privacySettingsRules</a></li><li><a href="global.html#profileVisibilitySchema">profileVisibilitySchema</a></li><li><a href="global.html#pronounsConstants">pronounsConstants</a></li><li><a href="global.html#pronounsController">pronounsController</a></li><li><a href="global.html#pronounsIdParamSchema">pronounsIdParamSchema</a></li><li><a href="global.html#pronounsIdsParamSchema">pronounsIdsParamSchema</a></li><li><a href="global.html#pronounsSchema">pronounsSchema</a></li><li><a href="global.html#pronounsSchemaBase">pronounsSchemaBase</a></li><li><a href="global.html#pronounsService">pronounsService</a></li><li><a href="global.html#pronounsValidator">pronounsValidator</a></li><li><a href="global.html#requestNewAdminPassword">requestNewAdminPassword</a></li><li><a href="global.html#requestNewPassword">requestNewPassword</a></li><li><a href="global.html#requestNewPasswordProvidesfunctionalityforuserstorequestapasswordreset.Thisfunctionextractsnecessaryinformationfromtherequestandpassesittotheservicelayer.">requestNewPasswordProvides functionality for users to request a password reset. This function extracts necessary information from the request and passes it to the service layer.</a></li><li><a href="global.html#resendAdminVerification">resendAdminVerification</a></li><li><a href="global.html#resendVerification">resendVerification</a></li><li><a href="global.html#resendVerificationAllowsuserstorequestanotherverificationemailifthefirstwasnotreceivedorexpired.">resendVerificationAllows users to request another verification email if the first was not received or expired.</a></li><li><a href="global.html#resetAdminPassword">resetAdminPassword</a></li><li><a href="global.html#resetPassword">resetPassword</a></li><li><a href="global.html#resetPasswordHandlesuserrequeststoresettheirpasswordusingatokenprovidedthroughapreviouspasswordresetrequest.">resetPasswordHandles user requests to reset their password using a token provided through a previous password reset request.</a></li><li><a href="global.html#resetPasswordVerifyTokenExpiresSchema">resetPasswordVerifyTokenExpiresSchema</a></li><li><a href="global.html#resetPasswordVerifyTokenSchema">resetPasswordVerifyTokenSchema</a></li><li><a href="global.html#roleIdParamSchema">roleIdParamSchema</a></li><li><a href="global.html#roleIdsParamSchema">roleIdsParamSchema</a></li><li><a href="global.html#roleSchema">roleSchema</a></li><li><a href="global.html#roleSchemaBase">roleSchemaBase</a></li><li><a href="global.html#rolesConstants">rolesConstants</a></li><li><a href="global.html#rolesController">rolesController</a></li><li><a href="global.html#rolesSchema">rolesSchema</a></li><li><a href="global.html#rolesService">rolesService</a></li><li><a href="global.html#rolesValidator">rolesValidator</a></li><li><a href="global.html#router">router</a></li><li><a href="global.html#sanitize">sanitize</a></li><li><a href="global.html#sanitizeRequestConfiguration">sanitizeRequestConfiguration</a></li><li><a href="global.html#sendEmail">sendEmail</a></li><li><a href="global.html#sendResponse">sendResponse</a></li><li><a href="global.html#sessionsSchema">sessionsSchema</a></li><li><a href="global.html#shutdownHandler">shutdownHandler</a></li><li><a href="global.html#signup">signup</a></li><li><a href="global.html#signupHandlesusersignuprequests.Extractshostdatafromtherequestandcallstheprovidedservicefunction.">signupHandles user signup requests. Extracts host data from the request and calls the provided service function.</a></li><li><a href="global.html#statusController">statusController</a></li><li><a href="global.html#statusService">statusService</a></li><li><a href="global.html#testUncaughtExceptionController">testUncaughtExceptionController</a></li><li><a href="global.html#toSentenceCase">toSentenceCase</a></li><li><a href="global.html#twitterSchema">twitterSchema</a></li><li><a href="global.html#twoFactorEnabledSchema">twoFactorEnabledSchema</a></li><li><a href="global.html#twoFactorSecretSchema">twoFactorSecretSchema</a></li><li><a href="global.html#undefinedController">undefinedController</a></li><li><a href="global.html#undefinedService">undefinedService</a></li><li><a href="global.html#updateAppearance">updateAppearance</a></li><li><a href="global.html#updateByIdUpdatesaspecificresourcebasedonitsIDprovidedintherequestparameters,handlingcomplexupdatesincludingfileuploads.">updateByIdUpdates a specific resource based on its ID provided in the request parameters, handling complex updates including file uploads.</a></li><li><a href="global.html#updateByRequesterUpdatesdataspecifictotherequester,supportingupdatesthatincludefileuploads.">updateByRequesterUpdates data specific to the requester, supporting updates that include file uploads.</a></li><li><a href="global.html#updatePermissionById">updatePermissionById</a></li><li><a href="global.html#updatePermissionSchema">updatePermissionSchema</a></li><li><a href="global.html#updateProfile">updateProfile</a></li><li><a href="global.html#updatePronounsById">updatePronounsById</a></li><li><a href="global.html#updatePronounsSchema">updatePronounsSchema</a></li><li><a href="global.html#updateRoleById">updateRoleById</a></li><li><a href="global.html#updateRoleSchema">updateRoleSchema</a></li><li><a href="global.html#updateUserProfile">updateUserProfile</a></li><li><a href="global.html#updatedByAdminSchema">updatedByAdminSchema</a></li><li><a href="global.html#uploadFile">uploadFile</a></li><li><a href="global.html#urlSchema">urlSchema</a></li><li><a href="global.html#userIdSchema">userIdSchema</a></li><li><a href="global.html#userProfileController">userProfileController</a></li><li><a href="global.html#userSchema">userSchema</a></li><li><a href="global.html#userSchemaBase">userSchemaBase</a></li><li><a href="global.html#usernameSchema">usernameSchema</a></li><li><a href="global.html#usersSchema">usersSchema</a></li><li><a href="global.html#validateAdminRequest">validateAdminRequest</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateEmails">validateEmails</a></li><li><a href="global.html#validateFile">validateFile</a></li><li><a href="global.html#validatePassword">validatePassword</a></li><li><a href="global.html#validatePermission">validatePermission</a></li><li><a href="global.html#validatePermissionsChecksifallthespecifiedpermissionIDsexistinthedatabase.Thisfunctionisessentialforvalidatingpermissionsaspartofaccesscontrolmechanisms.ItretrievespermissiondocumentsfromthedatabasebasedontheprovidedIDsandcomparesthecountoffoundpermissionswiththecountofrequestedIDs.">validatePermissionsChecks if all the specified permission IDs exist in the database. This function is essential for validating permissions as part of access control mechanisms.It retrieves permission documents from the database based on the provided IDs and compares the count of found permissions with the count of requested IDs.</a></li><li><a href="global.html#validateUserRequest">validateUserRequest</a></li><li><a href="global.html#validateWithSchemaAmiddlewaregeneratorfunctionthatcreatesamiddlewaretovalidatespecifiedpropertiesoftherequestobjectagainstprovidedJoischemas.ItappliescustomvalidationmessagesandallowsconfigurationofJoivalidationoptions.Ifvalidationfails,itsendsaformattederrorresponse;otherwise,itsanitizesthedatabytypeconversionandproceedstothenextmiddleware.">validateWithSchemaA middleware generator function that creates a middleware to validate specified properties of the request object against provided Joi schemas.It applies custom validation messages and allows configuration of Joi validation options. If validation fails, it sends a formatted error response; otherwise, it sanitizes the data by type conversion and proceeds to the next middleware.</a></li><li><a href="global.html#verify">verify</a></li><li><a href="global.html#verifyProcessesuseremailverificationusingatokenprovidedintherequestparameters.Itretrieveshostdataforlogging.">verifyProcesses user email verification using a token provided in the request parameters. It retrieves host data for logging.</a></li><li><a href="global.html#verifyAdmin">verifyAdmin</a></li><li><a href="global.html#verifyAuthenticationToken">verifyAuthenticationToken</a></li><li><a href="global.html#verifyJwtToken">verifyJwtToken</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.3</a> on Fri Aug 09 2024 18:43:57 GMT+0600 (Bangladesh Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

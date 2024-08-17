@@ -1,0 +1,15 @@
+echo "Running lint checks..."
+yarn lint:check
+if [ $? -ne 0 ]; then
+  echo "Lint checks failed."
+  exit 1
+fi
+
+echo "Running Prettier checks..."
+yarn prettier:check
+if [ $? -ne 0 ]; then
+  echo "Prettier checks failed."
+  exit 1
+fi
+
+echo "Pre-commit checks passed."

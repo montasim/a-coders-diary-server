@@ -1,0 +1,45 @@
+####################################################
+# .editorconfig Configuration File
+####################################################
+# EditorConfig is awesome: https://EditorConfig.org
+# This file serves as a template for configuring coding style and formatting settings.
+# Adjust these settings to align with your specific development and team preferences.
+
+####################################################
+# GENERAL SETTINGS
+# Purpose: Defines global settings that apply to all files.
+# Use: Establishes base configuration for code formatting.
+####################################################
+root = true
+
+####################################################
+# JAVASCRIPT, JSX, TYPESCRIPT, TSX FILES
+# Purpose: Configures formatting rules for JavaScript, JSX, TypeScript, and TSX files.
+# Use: Ensure consistent formatting and style across these file types.
+####################################################
+[*.{js,jsx,ts,tsx}]
+charset = utf-8
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+trim_trailing_whitespace = true
+insert_final_newline = true
+max_line_length = 80
+
+####################################################
+# JSON FILES
+# Purpose: Configures formatting rules specifically for JSON files.
+# Use: Ensure consistent formatting and style for JSON data files.
+####################################################
+[*.json]
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+
+####################################################
+# MARKDOWN FILES
+# Purpose: Configures formatting rules specifically for Markdown files.
+# Use: Ensure consistent style for Markdown documentation, with a preference for no trailing spaces.
+####################################################
+[*.md]
+trim_trailing_whitespace = false

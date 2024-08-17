@@ -1,0 +1,16 @@
+# This file is used to specify the Node.js version for the project when using Node Version Manager (NVM).
+# It ensures that all developers and environments use the same Node.js version, avoiding potential issues
+# related to version discrepancies.
+#
+# @file .nvmrc
+# @description Node Version Manager (NVM) configuration file that defines the Node.js version to be used
+# for this project. By specifying the version here, you can ensure consistency across different development
+# environments.
+#
+# @example
+# # To switch to the specified Node.js version in this project, run:
+# nvm use
+#
+# @version 20.11.1 - The specific Node.js version to be used for this project.
+
+20.11.1

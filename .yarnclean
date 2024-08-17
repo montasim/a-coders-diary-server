@@ -1,0 +1,79 @@
+####################################################
+# .yarnclean Configuration File
+####################################################
+# This file specifies patterns for Yarn to clean up unwanted files and directories from the project's node_modules folder.
+# Adjust these settings to exclude specific files, directories, or patterns that you do not want Yarn to include in the project.
+
+####################################################
+# Test Directories
+# Purpose: Exclude directories related to testing frameworks and test cases from being included in the project.
+# Use: Ensure that test-related files do not remain in the node_modules directory.
+####################################################
+__tests__
+test
+tests
+powered-test
+
+####################################################
+# Asset Directories
+# Purpose: Exclude directories that contain static assets such as documentation, images, and other resources.
+# Use: Prevent unnecessary files related to project assets from being included in the final build.
+####################################################
+docs
+doc
+website
+images
+assets
+
+####################################################
+# Examples
+# Purpose: Exclude directories containing example code or sample projects.
+# Use: Remove example files that are not part of the main project codebase.
+####################################################
+example
+examples
+
+####################################################
+# Code Coverage Directories
+# Purpose: Exclude directories related to code coverage tools and their output.
+# Use: Ensure that code coverage data does not persist in the final build.
+####################################################
+coverage
+.nyc_output
+
+####################################################
+# Build Scripts
+# Purpose: Exclude build-related script files that are used for project setup and building.
+# Use: Avoid including files used for build automation in the final package.
+####################################################
+Makefile
+Gulpfile.js
+Gruntfile.js
+
+####################################################
+# Configuration Files
+# Purpose: Exclude various configuration files that are not necessary for the final build.
+# Use: Clean up configuration files for CI/CD, code quality, and other tools.
+####################################################
+appveyor.yml
+circle.yml
+codeship-services.yml
+codeship-steps.yml
+wercker.yml
+.tern-project
+.gitattributes
+.editorconfig
+.*ignore
+.eslintrc
+.jshintrc
+.flowconfig
+.documentup.json
+.yarn-metadata.json
+.travis.yml
+
+####################################################
+# Miscellaneous Files
+# Purpose: Exclude miscellaneous files such as markdown documentation that are not needed for the project build.
+# Use: Remove non-essential documentation and related files from the node_modules directory.
+####################################################
+*.md

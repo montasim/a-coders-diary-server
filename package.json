@@ -1,7 +1,14 @@
 {
   "name": "a-coders-diary-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Legacy Express and MongoDB API prototype for developer posts, tags, projects, and profiles in A Coder's Diary.",
+  "keywords": [
+    "expressjs",
+    "jwt",
+    "mongodb",
+    "api",
+    "learning-project"
+  ],
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

@@ -1,94 +1,171 @@
-## A Coders Diary (Full-stack)
+# A Coders Diary Server
 
-This repository contains the Frontend of a blog website. Developer often faces many problems in their daily life. Every time we need to search Google or StackOverflow to solve those problems. Whenever a user finds a solution to a problem, he can post the solution in this blog. So, next time it will be easier for him to solve a similar situation.
+> A legacy Express and MongoDB API prototype for the A Coders Diary blogging project.
 
-### Website Link: https://a-coders-diary.web.app/
+[![Repository status](https://img.shields.io/badge/status-legacy-orange)](https://github.com/montasim/a-coders-diary-server)
+[![Node.js](https://img.shields.io/badge/Node.js-CommonJS-339933?logo=node.js&logoColor=white)](package.json)
+[![Support on SupportKori](https://img.shields.io/badge/Support_on-SupportKori-00B8B5)](https://www.supportkori.com/montasim)
 
-### Client Side Code: https://github.com/montasim/a-coders-diary
+This repository contains the original server prototype behind A Coders Diary, a learning project where developers could record posts, tags, projects, and profiles. It is useful as a compact example of an Express application connected directly to MongoDB, but it is **not ready for public or production deployment** in its current form.
 
-### Server Side Code: https://github.com/montasim/a-coders-diary-server
+**[Inspect the API source](index.js) · [View the client repository](https://github.com/montasim/a-coders-diary) · [Report a problem](https://github.com/montasim/a-coders-diary-server/issues)**
 
-### Features
+> [!WARNING]
+> The current API has no authentication or authorization middleware. Several public routes create, promote, or delete records. Run it only against disposable development data on a trusted local network until access control and validation are implemented.
 
-1. Authentication (Firebase)
-2. Manage posts (CRUD operations)
-3. User profile
-4. Author Profile
-5. Dashboard
-6. Admin panel
-7. Markdown Editor
-8. React Router
-9. Firebase hosting
+## What it contains
 
-### Technology Used
+- Express routes for users, administrators, posts, tags, and projects
+- MongoDB collections accessed through the native MongoDB driver
+- JSON request parsing and permissive CORS
+- Environment-based database credentials and port selection
+- Development and production start scripts
 
-1. React JS
-2. Express.js
-3. Cors
-4. Dotenv
-5. Nodemon
-6. MongoDB
+## Current API surface
 
-### Hosting
+The implementation in [`index.js`](index.js) registers these routes:
 
-1. Client-side hosting: Firebase
-2. Server-side hosting: Heroku
+| Method | Route | Current behavior |
+| --- | --- | --- |
+| `GET` | `/` | Returns a basic server response |
+| `GET` | `/users` | Returns records whose `userRole` is `user` |
+| `POST` | `/create-user` | Inserts the request body into `users` |
+| `DELETE` | `/delete-user/:_id` | Deletes a user by MongoDB ObjectId |
+| `GET` | `/admins` | Returns users whose role is `admin` |
+| `PUT` | `/create-admin/:userEmail` | Changes a user role to `admin` |
+| `PUT` | `/remove-admin/:userEmail` | Changes a user role to `user` |
+| `GET` | `/author-details/:_id` | Returns one user |
+| `GET` | `/posts` | Returns all posts |
+| `GET` | `/post-details/:_id` | Returns one post |
+| `GET` | `/my-posts?postAuthor=...` | Returns posts for an author |
+| `GET` | `/edit-post/:_id` | Returns the post selected for editing |
+| `POST` | `/create-post` | Inserts the request body into `posts` |
+| `DELETE` | `/delete-post/:_id` | Deletes one post |
+| `GET` | `/tags` | Returns all tags |
+| `POST` | `/add-tag` | Inserts the request body into `tags` |
+| `GET` | `/edit-tag/:_id` | Returns one tag |
+| `DELETE` | `/delete-tag/:_id` | Deletes one tag |
+| `GET` | `/projects` | Returns all projects |
+| `GET` | `/project-details/:_id` | Returns one project |
 
+There is a second `GET /users` handler intended to query by `userEmail`, but Express reaches the earlier handler first. Do not rely on email lookup without correcting the route design.
 
-<br>
-<br>
+## How it works
 
-<!-- connect with me start -->
-<div align="center"> 
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&duration=1&pause=1000&repeat=false&width=410&lines=%F0%9F%93%AA+%F0%9D%97%99%F0%9D%97%98%F0%9D%97%98%F0%9D%97%9F+%F0%9D%97%99%F0%9D%97%A5%F0%9D%97%98%F0%9D%97%98+%F0%9D%97%A7%F0%9D%97%A2+%F0%9D%97%96%F0%9D%97%A2%F0%9D%97%A1%F0%9D%97%A7%F0%9D%97%94%F0%9D%97%96%F0%9D%97%A7+%F0%9D%97%A0%F0%9D%97%98+%F0%9D%97%94%F0%9D%97%A1%F0%9D%97%AC%F0%9D%97%A7%F0%9D%97%9C%F0%9D%97%A0%F0%9D%97%98" alt="Typing SVG" />
-</div>
+```mermaid
+flowchart LR
+    A[HTTP client] --> B[Express routes]
+    B --> C[MongoDB native driver]
+    C --> D[(a-coders-diary database)]
+    D --> E[users]
+    D --> F[posts]
+    D --> G[tags]
+    D --> H[projects]
+```
 
-<br>
+The server creates a MongoDB Atlas connection string from `DB_USER` and `DB_PASSWORD`, connects once during startup, and registers route handlers over four collections. There is no schema layer, request validation, authentication, or centralized error response.
 
-<!-- social media links start -->
-<table align="center">
-  <thead align="center">
-      <tr>
-          <th>
-              <a href="https://www.linkedin.com/in/montasim">
-                  <img alt="linkedin icon" src="https://cdn.simpleicons.org/linkedin" width="35px">
-              </a>
-          </th>
-          <th>
-              <a href="https://www.github.com/montasim">
-                  <img alt="github icon" src="https://cdn.simpleicons.org/github/white" width="35px">
-              </a>
-          </th>
-          <th>
-              <a href="https://stackoverflow.com/users/20348607/montasim">
-                  <img alt="github icon" src="https://cdn.simpleicons.org/stackoverflow" width="35px">
-              </a>
-          </th>
-          <th>
-              <a href="https://montasim-dev.web.app/">
-                  <img alt="web icon" src="https://cdn.simpleicons.org/googlechrome" width="35px">
-              </a>
-          </th>
-          <th>
-              <a href="mailto:montasimmamun@gmail.com">
-                  <img alt="gmail icon" src="https://cdn.simpleicons.org/gmail" width="35px">
-              </a>
-          </th>
-          <th>
-              <a href="https://www.facebook.com/montasimmamun/">
-                  <img alt="facebook icon" src="https://cdn.simpleicons.org/facebook" width="35px">
-              </a>
-          </th>
-          <th>
-              <a href="https://twitter.com/montasimmamun">
-                  <img alt="facebook icon" src="https://cdn.simpleicons.org/twitter" width="35px">
-              </a>
-          </th>
-      </tr>
-  </thead>
-</table>
-<!-- social media links end -->
-<!-- connect with me end -->
+## Local development
 
-<br>
-<br>
+### Prerequisites
+
+- A maintained Node.js release compatible with the locked dependencies
+- npm
+- A disposable MongoDB Atlas database
+
+The repository does not declare an exact Node.js engine. Prefer a current Node.js LTS release and verify the legacy dependency set before upgrading it.
+
+### 1. Clone and install
+
+```bash
+git clone https://github.com/montasim/a-coders-diary-server.git
+cd a-coders-diary-server
+npm ci
+```
+
+### 2. Configure the environment
+
+Create a local `.env` file:
+
+```dotenv
+DB_USER=your_atlas_database_user
+DB_PASSWORD=your_atlas_database_password
+PORT=5000
+```
+
+The username and password are interpolated into a hard-coded Atlas cluster URL in `index.js`. That cluster hostname is project-specific; using another MongoDB deployment requires changing the URI construction in the source.
+
+Never commit `.env` or real database credentials. Use a database user restricted to disposable development data because the API exposes unauthenticated write and delete routes.
+
+### 3. Start the server
+
+```bash
+npm start
+```
+
+The default local address is [http://localhost:5000](http://localhost:5000).
+
+For automatic restarts during development:
+
+```bash
+npm run start-dev
+```
+
+### 4. Make a safe read request
+
+```bash
+curl http://localhost:5000/posts
+```
+
+Do not exercise mutation routes against data you cannot restore.
+
+## Available commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Run `index.js` with Node.js |
+| `npm run start-dev` | Run the server with nodemon |
+| `npm test` | Placeholder that exits with failure; no test suite is configured |
+
+## Project status and limitations
+
+This is a legacy learning project, not a maintained production service.
+
+- No authentication or authorization protects administrative or destructive operations.
+- Request bodies are inserted without schema validation or field allowlists.
+- CORS is unrestricted.
+- Invalid ObjectIds and database errors do not have centralized handling.
+- Two handlers share `GET /users`; the later email-query handler is effectively shadowed.
+- The MongoDB Atlas hostname and database name are hard-coded.
+- There are no tests, CI workflow, API schema, migrations, seed scripts, or deployment configuration.
+- The previous README referenced Heroku hosting, but this repository does not contain enough current evidence to claim that deployment is still available.
+
+These limitations should be addressed before connecting a public client or real user data.
+
+## Related project
+
+The historical front-end repository is [montasim/a-coders-diary](https://github.com/montasim/a-coders-diary). Its availability and configuration are maintained independently.
+
+## Support and security
+
+Use [GitHub Issues](https://github.com/montasim/a-coders-diary-server/issues) for reproducible local-development problems. Include the Node.js version, route, sanitized request, expected response, and actual response. Never include database credentials, connection strings, access tokens, or personal records.
+
+This repository does not include a dedicated security policy. Report sensitive concerns privately to [Montasim](mailto:montasimmamun@gmail.com), not in a public issue.
+
+## Contributing
+
+Security and correctness work should come before new features. High-value improvements include authentication, authorization, route validation, safe error handling, a configurable MongoDB URI, tests, and a documented API contract.
+
+The repository does not currently include dedicated contribution or code-of-conduct files. Open an issue before a substantial change, keep pull requests focused, and document any behavior or configuration changes.
+
+## Funding
+
+Optional support for maintained public work is available through [SupportKori](https://www.supportkori.com/montasim). For this legacy project, tested security fixes and documentation improvements are more valuable than feature expansion.
+
+## Author
+
+Built by [Montasim](https://github.com/montasim).
+
+## License
+
+`package.json` declares `ISC`, but this repository does not contain a license file. Until the maintainer adds explicit license text, do not assume permission to copy, modify, or redistribute the code.
